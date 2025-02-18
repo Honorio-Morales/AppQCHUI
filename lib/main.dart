@@ -38,7 +38,7 @@ class TradduchuaHome extends StatelessWidget {
       length: 4, // 4 pestañas
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Tradduchua'),
+          title: const Text('QCHUI'),
           bottom: const TabBar(
             indicatorColor: Colors.yellow,
             labelColor: Colors.white,
