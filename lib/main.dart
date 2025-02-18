@@ -56,7 +56,7 @@ class TradduchuaHome extends StatelessWidget {
             HomeScreen(), // Diccionario
             Center(child: Text("Sección de preguntas")),
             Center(child: Text("Comunidad")),
-            Center(child: Text("Información sobre Tradduchua")),
+            Center(child: Text("Información sobre QCHUI")),
           ],
         ),
       ),
