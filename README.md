@@ -26,7 +26,7 @@ cd appchua
 ---
 
 ## 🤝Contribuir  
-Este proyecto es de código abierto y cualquier aporte es bienvenido. Si quieres 
+Este proyecto es nuestro compas. <3 
 
 > **Realiza los cambios** que consideres necesarios
 
