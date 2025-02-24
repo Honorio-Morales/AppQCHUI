@@ -20,8 +20,8 @@ Antes de comenzar, asegúrate de tener instalado:
 ### Clonar el repositorio  
 Ejecuta el siguiente comando en la terminal:  
 ```sh
-git clone https://github.com/tu-usuario/appchua.git
-cd appchua
+git clone https://github.com/tu-usuario/appqchui.git
+cd appqchui
 ```
 ---
 
