@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appchua/screens/home_screen.dart';
+import 'package:AppQCHUI/screens/home_screen.dart';
 
 void main() {
   runApp(const TradduchuaApp());
