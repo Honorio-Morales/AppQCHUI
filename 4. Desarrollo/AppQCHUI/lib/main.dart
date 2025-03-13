@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:AppQCHUI/screens/home_screen.dart';
 
 void main() {
-  runApp(const TradduchuaApp());
-}
+  runApp(const TradduchuaApp()); //todo esta mal
+} //hola :v
 
 class TradduchuaApp extends StatelessWidget {
   const TradduchuaApp({super.key});
