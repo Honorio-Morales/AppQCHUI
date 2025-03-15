@@ -28,7 +28,7 @@ class TradduchuaApp extends StatelessWidget {
           bodyLarge: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
-      home: const TradduchuaHome(),
+      home: const TradduchuaHome(), 
     );
   }
 }
@@ -91,4 +91,5 @@ class _TradduchuaHomeState extends State<TradduchuaHome> {
       ),
     );
   }
+  ///////////////////////
 }
