@@ -4,6 +4,8 @@ import 'package:AppQCHUI/screens/favorites_screen.dart';
 import 'package:AppQCHUI/screens/questions_screen.dart';
 import 'package:AppQCHUI/screens/comunity_screen.dart';
 import 'package:AppQCHUI/screens/info_screen.dart';
+import 'package:AppQCHUI/screens/home.dart';
+
 
 void main() {
   runApp(const TradduchuaApp());
