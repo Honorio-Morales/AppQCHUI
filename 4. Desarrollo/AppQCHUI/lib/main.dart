@@ -8,7 +8,7 @@ import 'package:AppQCHUI/screens/info_screen.dart';
 void main() {
   runApp(const TradduchuaApp());
 }
-
+/// dasdsafasdsa dsadas angie aaqui
 class TradduchuaApp extends StatelessWidget {
   const TradduchuaApp({super.key});
 
