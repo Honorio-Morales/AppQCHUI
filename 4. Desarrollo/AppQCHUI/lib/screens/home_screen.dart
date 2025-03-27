@@ -1,108 +1,92 @@
 import 'package:flutter/material.dart';
-import 'favorites_screen.dart';
+import 'package:AppQCHUI/screens/dictionary_screen.dart';
+import 'package:AppQCHUI/screens/questions_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  final Set<String> favoritos;
-  final Function(String) onToggleFavorite;
-
-  const HomeScreen({
-    super.key,
-    required this.favoritos,
-    required this.onToggleFavorite,
-  });
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final List<Map<String, String>> words = [
-    {'espanol': 'Hola', 'quechua': 'Allillanchu'},
-    {'espanol': 'Gracias', 'quechua': 'Sulpayki'},
-    {'espanol': 'Agua', 'quechua': 'Yaku'},
-    {'espanol': 'Sol', 'quechua': 'Inti'},
-    {'espanol': 'Luna', 'quechua': 'Killa'},
-  ];
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Diccionario"),
+        title: const Text('Aprende Quechua'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite, color: Colors.red),
+            icon: const Icon(Icons.person),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FavoritesScreen(
-                    favoritos: widget.favoritos,
-                    onRemoveFavorite: widget.onToggleFavorite,
-                  ),
-                ),
-              );
+              // Navegar a login/registro
             },
           ),
         ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: words.length,
-        itemBuilder: (context, index) {
-          String espanol = words[index]['espanol']!;
-          String quechua = words[index]['quechua']!;
-          return Card(
-            margin: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          espanol,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          height: 2,
-                          width: 60,
-                          color: Colors.orange,
-                        ),
-                        Text(
-                          quechua,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.brown,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      widget.favoritos.contains(espanol)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: widget.favoritos.contains(espanol)
-                          ? Colors.red
-                          : Colors.grey,
-                    ),
-                    onPressed: () => widget.onToggleFavorite(espanol),
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(
+              'assets/images/qchui.png',
+              height: 250,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 30),
+           
+            ElevatedButton.icon(
+              icon: const Icon(Icons.book, size: 24),
+              label: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'DICCIONARIO QUECHUA-ESPAÑOL',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
-          );
-        },
+            const SizedBox(height: 20),
+           
+            OutlinedButton.icon(
+              icon: const Icon(Icons.quiz, size: 24),
+              label: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'PRACTICA CON EJERCICIOS',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  QuestionsScreen()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                side: BorderSide(color: Theme.of(context).primaryColor),
+              ),
+            ),
+           
+            const Spacer(),
+           
+            TextButton(
+              onPressed: () {
+                // Acción rápida
+              },
+              child: const Text('Explora contenido sin registrar'),
+            ),
+          ],
+        ),
       ),
     );
   }

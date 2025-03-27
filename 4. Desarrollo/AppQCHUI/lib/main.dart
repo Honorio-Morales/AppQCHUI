@@ -1,97 +1,146 @@
 import 'package:flutter/material.dart';
 import 'package:AppQCHUI/screens/home_screen.dart';
+import 'package:AppQCHUI/screens/dictionary_screen.dart';
 import 'package:AppQCHUI/screens/favorites_screen.dart';
 import 'package:AppQCHUI/screens/questions_screen.dart';
 import 'package:AppQCHUI/screens/comunity_screen.dart';
 import 'package:AppQCHUI/screens/info_screen.dart';
-import 'package:AppQCHUI/screens/home.dart';
-
 
 void main() {
-  runApp(const TradduchuaApp());
+  runApp(const TraduchuaApp());
 }
-/// dasdsafasdsa dsadas angie aaqui
-class TradduchuaApp extends StatelessWidget {
-  const TradduchuaApp({super.key});
+
+class TraduchuaApp extends StatelessWidget {
+  const TraduchuaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Tradduchua',
+      title: 'Traduchu',
       theme: ThemeData(
-        primaryColor: Colors.green[700],
-        scaffoldBackgroundColor: Colors.orange[100],
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.green[800],
-          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 241, 221, 221),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFEE7072),
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.brown, fontSize: 18, fontWeight: FontWeight.bold),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFFEE7072), // Color rojizo en la barra de navegación
+          selectedItemColor: Colors.white, // Íconos seleccionados en blanco
+          unselectedItemColor: Color.fromARGB(255, 72, 48, 49), // Íconos no seleccionados en tono más claro
         ),
       ),
-      home: const TradduchuaHome(), 
+      home: const MainNavigationWrapper(),
     );
   }
 }
 
-class TradduchuaHome extends StatefulWidget {
-  const TradduchuaHome({super.key});
+class MainNavigationWrapper extends StatefulWidget {
+  const MainNavigationWrapper({super.key});
 
   @override
-  _TradduchuaHomeState createState() => _TradduchuaHomeState();
+  State<MainNavigationWrapper> createState() => _MainNavigationWrapperState();
 }
 
-class _TradduchuaHomeState extends State<TradduchuaHome> {
-  final Set<String> favoritos = {};
+class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
+  final Set<String> _favoritos = {};
+  int _selectedIndex = 0;
 
   void _toggleFavorite(String palabra) {
     setState(() {
-      if (favoritos.contains(palabra)) {
-        favoritos.remove(palabra);
+      if (_favoritos.contains(palabra)) {
+        _favoritos.remove(palabra);
       } else {
-        favoritos.add(palabra);
+        _favoritos.add(palabra);
       }
     });
   }
 
+  late final List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      const HomeScreen(), // Pantalla de inicio
+      DictionaryScreen( // Pantalla de diccionario
+        favoritos: _favoritos,
+        onToggleFavorite: _toggleFavorite,
+      ),
+      QuestionsScreen( // Pantalla de práctica
+      ), 
+      CommunityScreen( // Pantalla de comunidad
+      ),
+      FavoritesScreen( // Pantalla de favoritos
+        favoritos: _favoritos,
+        onRemoveFavorite: _toggleFavorite,
+      ),
+      const InfoScreen(), // Pantalla de información
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('QCHUI'),
-          bottom: const TabBar(
-            indicatorColor: Colors.yellow,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white60,
-            tabs: [
-              Tab(icon: Icon(Icons.book), text: 'Diccionario'),
-              Tab(icon: Icon(Icons.favorite), text: 'Favoritos'),
-              Tab(icon: Icon(Icons.question_answer), text: 'Preguntas'),
-              Tab(icon: Icon(Icons.people), text: 'Comunidad'),
-              Tab(icon: Icon(Icons.info), text: 'Info'),
-            ],
+    return Scaffold(
+      appBar: _selectedIndex != 0 
+        ? AppBar(
+            title: Row(
+              children: [
+                Image.asset(
+                  'assets/images/qchui.png',
+                  height: 60,
+                  width: 60,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  '',
+                  style: TextStyle(
+                    color: Colors.brown,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : null,
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
           ),
-        ),
-        body: TabBarView(
-          children: [
-            HomeScreen(
-              favoritos: favoritos,
-              onToggleFavorite: _toggleFavorite,
-            ),
-            FavoritesScreen(
-              favoritos: favoritos,
-              onRemoveFavorite: _toggleFavorite,
-            ),
-            QuestionsScreen(),
-            CommunityScreen(),
-            InfoScreen(),
-          ],
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Diccionario',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.quiz),
+            label: 'Práctica',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Comunidad',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favoritos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'Info',
+          ),
+        ],
       ),
     );
   }
-  ///////////////////////
 }
