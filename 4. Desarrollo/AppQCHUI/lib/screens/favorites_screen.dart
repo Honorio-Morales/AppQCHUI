@@ -15,7 +15,7 @@ class FavoritesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Favoritos")),
       body: favoritos.isEmpty
-          ? const Center(child: Text("No hay palabras en favoritos"))
+          ? const Center(child: Text("No hay palabras en f avoritos"))
           : ListView.builder(
               itemCount: favoritos.length,
               itemBuilder: (context, index) {

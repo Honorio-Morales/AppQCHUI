@@ -125,7 +125,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.quiz),
-            label: 'Práctica',
+            label: 'Preguntas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),

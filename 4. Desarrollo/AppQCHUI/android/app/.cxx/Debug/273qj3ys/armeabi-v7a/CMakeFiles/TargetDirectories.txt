@@ -1,0 +1,2 @@
+D:/DiccionarioQuechua/4. Desarrollo/AppQCHUI/android/app/.cxx/Debug/273qj3ys/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/DiccionarioQuechua/4. Desarrollo/AppQCHUI/android/app/.cxx/Debug/273qj3ys/armeabi-v7a/CMakeFiles/rebuild_cache.dir
