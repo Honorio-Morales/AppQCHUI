@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:AppQCHUI/screens/home_screen.dart';
 import 'package:AppQCHUI/screens/dictionary_screen.dart';
 import 'package:AppQCHUI/screens/favorites_screen.dart';
@@ -6,9 +8,14 @@ import 'package:AppQCHUI/screens/questions_screen.dart';
 import 'package:AppQCHUI/screens/comunity_screen.dart';
 import 'package:AppQCHUI/screens/info_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TraduchuaApp());
 }
+
 
 class TraduchuaApp extends StatelessWidget {
   const TraduchuaApp({super.key});
