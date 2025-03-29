@@ -7,6 +7,9 @@ import 'package:AppQCHUI/screens/favorites_screen.dart';
 import 'package:AppQCHUI/screens/questions_screen.dart';
 import 'package:AppQCHUI/screens/comunity_screen.dart';
 import 'package:AppQCHUI/screens/info_screen.dart';
+import 'package:AppQCHUI/screens/login_screen.dart';
+import 'package:AppQCHUI/screens/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +18,6 @@ void main() async {
   );
   runApp(const TraduchuaApp());
 }
-
 
 class TraduchuaApp extends StatelessWidget {
   const TraduchuaApp({super.key});
@@ -38,12 +40,43 @@ class TraduchuaApp extends StatelessWidget {
           ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFFEE7072), // Color rojizo en la barra de navegación
-          selectedItemColor: Colors.white, // Íconos seleccionados en blanco
-          unselectedItemColor: Color.fromARGB(255, 72, 48, 49), // Íconos no seleccionados en tono más claro
+          backgroundColor: Color(0xFFEE7072),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Color.fromARGB(255, 72, 48, 49),
         ),
       ),
-      home: const MainNavigationWrapper(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => AuthWrapper(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/main': (context) => const MainNavigationWrapper(),
+      },
+    );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        // Mostrar pantalla de carga mientras verifica autenticación
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        
+        // Usuario autenticado
+        if (snapshot.hasData) {
+          return const MainNavigationWrapper();
+        }
+        
+        // Usuario no autenticado
+        return const HomeScreen();
+      },
     );
   }
 }
@@ -57,7 +90,36 @@ class MainNavigationWrapper extends StatefulWidget {
 
 class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   final Set<String> _favoritos = {};
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   int _selectedIndex = 0;
+  User? _currentUser;
+  late final List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = _auth.currentUser;
+    _auth.authStateChanges().listen((User? user) {
+      if (mounted) {
+        setState(() => _currentUser = user);
+      }
+    });
+    
+    _screens = [
+      const HomeScreen(),
+      DictionaryScreen(
+        favoritos: _favoritos,
+        onToggleFavorite: _toggleFavorite,
+      ),
+      QuestionsScreen(), 
+      CommunityScreen(),
+      FavoritesScreen(
+        favoritos: _favoritos,
+        onRemoveFavorite: _toggleFavorite,
+      ),
+      const InfoScreen(),
+    ];
+  }
 
   void _toggleFavorite(String palabra) {
     setState(() {
@@ -69,58 +131,96 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
     });
   }
 
-  late final List<Widget> _screens;
+  Future<void> _signOut() async {
+    await _auth.signOut();
+    if (mounted) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/',
+        (route) => false,
+      );
+    }
+  }
 
-  @override
-  void initState() {
-    super.initState();
-    _screens = [
-      const HomeScreen(), // Pantalla de inicio
-      DictionaryScreen( // Pantalla de diccionario
-        favoritos: _favoritos,
-        onToggleFavorite: _toggleFavorite,
-      ),
-      QuestionsScreen( // Pantalla de práctica
-      ), 
-      CommunityScreen( // Pantalla de comunidad
-      ),
-      FavoritesScreen( // Pantalla de favoritos
-        favoritos: _favoritos,
-        onRemoveFavorite: _toggleFavorite,
-      ),
-      const InfoScreen(), // Pantalla de información
-    ];
+  Widget _buildUserAvatar() {
+    if (_currentUser?.photoURL != null) {
+      return CircleAvatar(
+        backgroundImage: NetworkImage(_currentUser!.photoURL!),
+      );
+    }
+    return CircleAvatar(
+      backgroundColor: const Color(0xFFEE7072),
+      child: _currentUser?.email != null
+          ? Text(
+              _currentUser!.email![0].toUpperCase(),
+              style: const TextStyle(color: Colors.white),
+            )
+          : const Icon(Icons.person, color: Colors.white),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _selectedIndex != 0 
-        ? AppBar(
-            title: Row(
-              children: [
-                Image.asset(
-                  'assets/images/qchui.png',
-                  height: 60,
-                  width: 60,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  '',
-                  style: TextStyle(
-                    color: Colors.brown,
-                    fontWeight: FontWeight.bold,
+          ? AppBar(
+              title: Row(
+                children: [
+                  Image.asset(
+                    'assets/images/qchui.png',
+                    height: 60,
+                    width: 60,
                   ),
+                  const SizedBox(width: 10),
+                  Text(
+                    _selectedIndex == 1 ? 'Diccionario' : 
+                    _selectedIndex == 2 ? 'Ejercicios' :
+                    _selectedIndex == 3 ? 'Comunidad' :
+                    _selectedIndex == 4 ? 'Favoritos' : 'Información',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                IconButton(
+                  icon: _buildUserAvatar(),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Cerrar Sesión'),
+                        content: const Text('¿Estás seguro que deseas salir?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancelar'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _signOut();
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Salir',
+                              style: TextStyle(color: Color(0xFFEE7072)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
-            ),
-          )
-        : null,
+            )
+          : null,
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
         type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -132,7 +232,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.quiz),
-            label: 'Preguntas',
+            label: 'Ejercicios',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
@@ -144,7 +244,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
-            label: 'Info',
+            label: 'Información',
           ),
         ],
       ),

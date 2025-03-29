@@ -1,9 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:AppQCHUI/screens/dictionary_screen.dart';
 import 'package:AppQCHUI/screens/questions_screen.dart';
+import 'package:AppQCHUI/screens/login_screen.dart';
+import 'package:AppQCHUI/screens/register_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final Set<String> favoritos = {};
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    // Verificar el estado de autenticación al iniciar
+    _auth.authStateChanges().listen((User? user) {
+      if (mounted) {
+        setState(() {
+          _currentUser = user;
+        });
+      }
+    });
+  }
+
+  void onToggleFavorite(String palabra) {
+    setState(() {
+      if (favoritos.contains(palabra)) {
+        favoritos.remove(palabra);
+      } else {
+        favoritos.add(palabra);
+      }
+    });
+  }
+
+  Future<void> _signOut() async {
+    await _auth.signOut();
+  }
+
+  Widget _buildUserAvatar() {
+    if (_currentUser?.photoURL != null) {
+      return CircleAvatar(
+        backgroundImage: NetworkImage(_currentUser!.photoURL!),
+      );
+    } else if (_currentUser?.email != null) {
+      return CircleAvatar(
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Text(
+          _currentUser!.email![0].toUpperCase(),
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
+    }
+    return const CircleAvatar(
+      child: Icon(Icons.person),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +69,44 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Aprende Quechua'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              // Navegar a login/registro
-            },
-          ),
+          if (_currentUser != null)
+            IconButton(
+              icon: _buildUserAvatar(),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Cerrar Sesión'),
+                    content: const Text('¿Estás seguro que deseas salir?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _signOut();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Salir'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              tooltip: 'Perfil de usuario',
+            )
+          else
+            IconButton(
+              icon: const Icon(Icons.login),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+              tooltip: 'Iniciar Sesión',
+            ),
         ],
       ),
       body: Padding(
@@ -26,11 +116,79 @@ class HomeScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/qchui.png',
-              height: 250,
+              height: 200,
               fit: BoxFit.contain,
             ),
-            const SizedBox(height: 30),
-           
+            const SizedBox(height: 20),
+            
+            // Mostrar opciones de autenticación solo si no hay usuario logueado
+            if (_currentUser == null) ...[
+              Card(
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Bienvenido a Aprende Quechua',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text('Iniciar Sesión'),
+                      ),
+                      const SizedBox(height: 10),
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          side: BorderSide(color: Theme.of(context).primaryColor),
+                        ),
+                        child: const Text('Crear Cuenta'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              const Divider(),
+              const SizedBox(height: 20),
+            ] else ...[
+              // Mensaje de bienvenida personalizado para usuarios logueados
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    '¡Bienvenido, ${_currentUser!.email?.split('@').first ?? 'Usuario'}!',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+            
+            // Contenido principal disponible para todos
             ElevatedButton.icon(
               icon: const Icon(Icons.book, size: 24),
               label: const Padding(
@@ -43,7 +201,12 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => DictionaryScreen(
+                      favoritos: favoritos,
+                      onToggleFavorite: onToggleFavorite,
+                    ),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -52,8 +215,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            
             const SizedBox(height: 20),
-           
+            
             OutlinedButton.icon(
               icon: const Icon(Icons.quiz, size: 24),
               label: const Padding(
@@ -66,7 +230,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  QuestionsScreen()),
+                  MaterialPageRoute(builder: (context) => QuestionsScreen()),
                 );
               },
               style: OutlinedButton.styleFrom(
@@ -76,15 +240,25 @@ class HomeScreen extends StatelessWidget {
                 side: BorderSide(color: Theme.of(context).primaryColor),
               ),
             ),
-           
+            
             const Spacer(),
-           
-            TextButton(
-              onPressed: () {
-                // Acción rápida
-              },
-              child: const Text('Explora contenido sin registrar'),
-            ),
+            
+            // Opción para continuar como invitado
+            if (_currentUser == null)
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DictionaryScreen(
+                        favoritos: favoritos,
+                        onToggleFavorite: onToggleFavorite,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text('Continuar como invitado'),
+              ),
           ],
         ),
       ),
