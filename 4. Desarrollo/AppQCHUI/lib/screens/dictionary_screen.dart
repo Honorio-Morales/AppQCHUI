@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:AppQCHUI/models/palabra_model.dart';
+import 'package:AppQCHUI/services/firestore_service.dart';
 import 'package:AppQCHUI/screens/favorites_screen.dart';
 
 class DictionaryScreen extends StatefulWidget {
@@ -16,34 +20,25 @@ class DictionaryScreen extends StatefulWidget {
 }
 
 class _DictionaryScreenState extends State<DictionaryScreen> {
-  // Lista de palabras (podrías mover esto a un servicio/repositorio)
-  final List<Map<String, String>> _words = [
-    {'espanol': 'Hola', 'quechua': 'Allillanchu'},
-    {'espanol': 'Gracias', 'quechua': 'Sulpayki'},
-    {'espanol': 'Agua', 'quechua': 'Yaku'},
-    {'espanol': 'Sol', 'quechua': 'Inti'},
-    {'espanol': 'Luna', 'quechua': 'Killa'},
-    // Agrega más palabras aquí
-  ];
-
-  // Controlador para la barra de búsqueda
+  final FirestoreService _firestoreService = FirestoreService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, String>> _filteredWords = [];
+  late Stream<List<Palabra>> _palabrasStream;
+  User? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    _filteredWords = _words;
-    _searchController.addListener(_filterWords);
+    _currentUser = _auth.currentUser;
+    _palabrasStream = _firestoreService.getPalabras();
   }
 
-  void _filterWords() {
-    final query = _searchController.text.toLowerCase();
+  void _onSearchChanged() {
+    final query = _searchController.text.trim();
     setState(() {
-      _filteredWords = _words.where((word) {
-        return word['espanol']!.toLowerCase().contains(query) ||
-               word['quechua']!.toLowerCase().contains(query);
-      }).toList();
+      _palabrasStream = query.isEmpty
+          ? _firestoreService.getPalabras()
+          : Stream.fromFuture(_firestoreService.buscarPalabras(query));
     });
   }
 
@@ -77,11 +72,11 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
       ),
       body: Column(
         children: [
-          // Barra de búsqueda
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
+              onChanged: (_) => _onSearchChanged(),
               decoration: InputDecoration(
                 hintText: 'Buscar palabra...',
                 prefixIcon: const Icon(Icons.search),
@@ -91,15 +86,24 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               ),
             ),
           ),
-          // Lista de palabras
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              itemCount: _filteredWords.length,
-              itemBuilder: (context, index) {
-                final espanol = _filteredWords[index]['espanol']!;
-                final quechua = _filteredWords[index]['quechua']!;
-                return _buildWordCard(espanol, quechua);
+            child: StreamBuilder<List<Palabra>>(
+              stream: _palabrasStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final palabras = snapshot.data!;
+                return ListView.builder(
+                  itemCount: palabras.length,
+                  itemBuilder: (context, index) {
+                    final palabra = palabras[index];
+                    return _buildWordCard(palabra);
+                  },
+                );
               },
             ),
           ),
@@ -108,7 +112,9 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     );
   }
 
-  Widget _buildWordCard(String espanol, String quechua) {
+  Widget _buildWordCard(Palabra palabra) {
+    final esFavorito = widget.favoritos.contains(palabra.id);
+
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -121,22 +127,18 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    espanol,
-                    style:  TextStyle(
+                    palabra.palabraEspanol,
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green[700],
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Container(
-                    height: 2,
-                    width: 60,
-                    color: Colors.orange,
-                  ),
+                  Container(height: 2, width: 60, color: Colors.orange),
                   const SizedBox(height: 4),
                   Text(
-                    quechua,
+                    palabra.palabraQuechua,
                     style: const TextStyle(
                       fontSize: 18,
                       color: Colors.brown,
@@ -148,14 +150,10 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
             ),
             IconButton(
               icon: Icon(
-                widget.favoritos.contains(espanol)
-                    ? Icons.favorite
-                    : Icons.favorite_border,
-                color: widget.favoritos.contains(espanol)
-                    ? Colors.red
-                    : Colors.grey,
+                esFavorito ? Icons.favorite : Icons.favorite_border,
+                color: esFavorito ? Colors.red : Colors.grey,
               ),
-              onPressed: () => widget.onToggleFavorite(espanol),
+              onPressed: () => widget.onToggleFavorite(palabra.id),
             ),
           ],
         ),

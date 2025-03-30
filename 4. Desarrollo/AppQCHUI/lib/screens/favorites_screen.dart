@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:AppQCHUI/models/palabra_model.dart';
+import 'package:AppQCHUI/services/firestore_service.dart';
 
 class FavoritesScreen extends StatelessWidget {
   final Set<String> favoritos;
@@ -12,21 +15,41 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final firestoreService = FirestoreService();
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Favoritos")),
-      body: favoritos.isEmpty
-          ? const Center(child: Text("No hay palabras en f avoritos"))
-          : ListView.builder(
-              itemCount: favoritos.length,
-              itemBuilder: (context, index) {
-                String palabra = favoritos.elementAt(index);
-                return ListTile(
-                  title: Text(palabra, style: const TextStyle(fontSize: 18)),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.favorite, color: Colors.red),
-                    onPressed: () => onRemoveFavorite(palabra),
-                  ),
-                );
+      appBar: AppBar(title: const Text("Mis Favoritos")),
+      body: user == null
+          ? const Center(child: Text('Inicia sesión para ver tus favoritos'))
+          : StreamBuilder<List<Palabra>>(
+              stream: firestoreService.getPalabrasFavoritas(user.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final palabras = snapshot.data ?? [];
+                return palabras.isEmpty
+                    ? const Center(child: Text('No tienes favoritos aún'))
+                    : ListView.builder(
+                        itemCount: palabras.length,
+                        itemBuilder: (context, index) {
+                          final palabra = palabras[index];
+                          final esFavorito = favoritos.contains(palabra.id);
+
+                          return ListTile(
+                            title: Text(palabra.palabraQuechua),
+                            subtitle: Text(palabra.palabraEspanol),
+                            trailing: IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                color: esFavorito ? Colors.red : Colors.grey,
+                              ),
+                              onPressed: () => onRemoveFavorite(palabra.id),
+                            ),
+                          );
+                        },
+                      );
               },
             ),
     );
