@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  QuestionsScreen({super.key});
+  const QuestionsScreen({super.key});
 
   @override
   _QuestionsScreenState createState() => _QuestionsScreenState();
