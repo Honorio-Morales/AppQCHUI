@@ -26,7 +26,7 @@ class TraduchuaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Traduchu',
+      title: 'QChui',
       theme: ThemeData(
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: const Color.fromARGB(255, 241, 221, 221),
@@ -64,19 +64,23 @@ class AuthWrapper extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // Mostrar pantalla de carga mientras verifica autenticación
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
         
-        // Usuario autenticado
         if (snapshot.hasData) {
-          return const MainNavigationWrapper();
+          // Redirige al flujo principal
+          Future.microtask(() {
+            Navigator.pushReplacementNamed(context, '/main');
+          });
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
         
-        // Usuario no autenticado
+        // Muestra HomeScreen para usuarios no autenticados
         return const HomeScreen();
       },
     );
@@ -97,31 +101,31 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   User? _currentUser;
   late final List<Widget> _screens;
 
-  @override
-  void initState() {
-    super.initState();
-    _currentUser = _auth.currentUser;
-    _auth.authStateChanges().listen((User? user) {
-      if (mounted) {
-        setState(() => _currentUser = user);
-      }
-    });
-    
-    _screens = [
-      const HomeScreen(),
-      DictionaryScreen(
-        favoritos: _favoritos,
-        onToggleFavorite: _toggleFavorite,
-      ),
-      QuestionsScreen(), 
-      CommunityScreen(),
-      FavoritesScreen(
-        favoritos: _favoritos,
-        onRemoveFavorite: _toggleFavorite,
-      ),
-      const InfoScreen(),
-    ];
-  }
+@override
+void initState() {
+  super.initState();
+  _currentUser = _auth.currentUser;
+  _auth.authStateChanges().listen((User? user) {
+    if (mounted) {
+      setState(() => _currentUser = user);
+    }
+  });
+  
+  _screens = [
+    const HomeScreen(),
+    DictionaryScreen(
+      favoritos: _favoritos,
+      onToggleFavorite: _toggleFavorite,
+    ),
+    QuestionsScreen(), 
+    CommunityScreen(),
+    FavoritesScreen(
+      favoritos: _favoritos,
+      onRemoveFavorite: _toggleFavorite,
+    ),
+    const InfoScreen(),
+  ];
+}
 
   void _toggleFavorite(String palabra) {
     setState(() {

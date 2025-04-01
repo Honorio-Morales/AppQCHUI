@@ -22,7 +22,7 @@ class Pregunta {
     return Pregunta(
       id: doc.id,
       usuarioUid: data['usuario_uid'],
-      nombreUsuario: data['nombre_usuario'] ?? 'Usuario desconocido',
+      nombreUsuario: data['nombreUsuario'] ?? 'Usuario desconocido',
       texto: data['texto'],
       fecha: (data['fecha'] as Timestamp).toDate(),
       respuestas: data['respuestas'] != null
@@ -34,7 +34,7 @@ class Pregunta {
   Map<String, dynamic> toFirestore() {
     return {
       'usuario_uid': usuarioUid,
-      'nombre_usuario': nombreUsuario,
+      'nombreUsuario': nombreUsuario,
       'texto': texto,
       'fecha': fecha,
     };

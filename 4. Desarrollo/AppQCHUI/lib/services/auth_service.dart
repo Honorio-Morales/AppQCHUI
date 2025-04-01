@@ -24,6 +24,7 @@ class AuthService {
           await _firestore.collection('usuarios').doc(user.uid).set({
             'nombre': email.split('@')[0], // Nombre provisional basado en el email
             'email': email,
+            'fechaRegistro': FieldValue.serverTimestamp(),
           });
         }
       }
@@ -46,8 +47,9 @@ class AuthService {
 
       if (user != null) {
         await _firestore.collection('usuarios').doc(user.uid).set({
-          'nombre': nombre,
+          'nombre': nombre.trim(), // Nombre completo proporcionado
           'email': email,
+          'fechaRegistro': FieldValue.serverTimestamp(),
         });
       }
 
@@ -55,6 +57,18 @@ class AuthService {
     } catch (e) {
       print("Error al registrarse: $e");
       return null;
+    }
+  }
+
+  Future<void> updateUserName(String uid, String newName) async {
+    try {
+      await _firestore.collection('usuarios').doc(uid).update({
+        'nombre': newName.trim(),
+        'ultimaActualizacion': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print("Error al actualizar nombre: $e");
+      throw e;
     }
   }
 

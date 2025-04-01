@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:AppQCHUI/screens/dictionary_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,37 +16,30 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   String? _errorMessage;
 
-Future<void> _signIn() async {
-  if (!_formKey.currentState!.validate()) return;
+  Future<void> _signIn() async {
+    if (!_formKey.currentState!.validate()) return;
 
-  setState(() {
-    _isLoading = true;
-    _errorMessage = null;
-  });
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
 
-  try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-    
-    // Navegación después de login exitoso
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, '/main');
-    }
-    
-  } on FirebaseAuthException catch (e) {
-    if (mounted) {
-      setState(() {
-        _errorMessage = _getErrorMessage(e.code);
-      });
-    }
-  } finally {
-    if (mounted) {
-      setState(() => _isLoading = false);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      
+      // Redirección al MainNavigationWrapper
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/main');
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() => _errorMessage = _getErrorMessage(e.code));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
-}
 
   String _getErrorMessage(String code) {
     switch (code) {

@@ -19,8 +19,8 @@ class Palabra {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Palabra(
       id: doc.id,
-      palabraEspanol: data['palabraEspanol'] ?? '', // <-- Corregido
-      palabraQuechua: data['palabraQuechua'] ?? '', // <-- Corregido
+      palabraEspanol: data['palabraEspanol'] ?? '', 
+      palabraQuechua: data['palabraQuechua'] ?? '', 
       categoria: data['categoria'],
       ejemplo: data['ejemplo'],
     );
@@ -28,8 +28,8 @@ class Palabra {
 
   Map<String, dynamic> toMap() {
     return {
-      'palabraEspanol': palabraEspanol, // <-- Corregido
-      'palabraQuechua': palabraQuechua, // <-- Corregido
+      'palabraEspanol': palabraEspanol, 
+      'palabraQuechua': palabraQuechua, 
       'categoria': categoria,
       'ejemplo': ejemplo,
     };

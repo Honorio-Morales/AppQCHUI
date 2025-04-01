@@ -24,42 +24,51 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 
   Future<void> _publicarPregunta() async {
-    String texto = _preguntaController.text.trim();
-    if (_isSending || texto.isEmpty || _currentUser == null) return;
+    if (_isSending || _currentUser == null) return;
+    final texto = _preguntaController.text.trim();
+    if (texto.isEmpty) return;
 
     setState(() => _isSending = true);
 
     try {
-      // 🔹 Obtener nombre del usuario autenticado desde Firestore
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+      // Obtener o crear documento de usuario
+      final userDoc = await FirebaseFirestore.instance
           .collection('usuarios')
-          .doc(_currentUser!.uid)
+          .doc(_currentUser.uid)
           .get();
 
-      // 🔹 Depuración: Verificar si el usuario existe en Firestore
-      print("UID del usuario autenticado: ${_currentUser!.uid}");
-      print("Datos obtenidos de Firestore: ${userDoc.data()}");
+      String nombreUsuario;
+      if (!userDoc.exists) {
+        nombreUsuario = _currentUser.email?.split('@')[0] ?? 'Usuario';
+        await FirebaseFirestore.instance
+            .collection('usuarios')
+            .doc(_currentUser.uid)
+            .set({
+          'nombre': nombreUsuario,
+          'email': _currentUser.email,
+        });
+      } else {
+        nombreUsuario = userDoc['nombre'] ?? 
+            _currentUser.email?.split('@')[0] ?? 
+            'Usuario';
+      }
 
-      String nombreUsuario = (userDoc.data() as Map<String, dynamic>?)?['nombre'] ?? 'Usuario desconocido';
-
-      // 🔹 Depuración: Verificar qué se está guardando
-      print("Publicando pregunta con nombreUsuario: $nombreUsuario");
-
-      final pregunta = Pregunta(
+      await _firestoreService.addPregunta(Pregunta(
         id: '',
-        usuarioUid: _currentUser!.uid,
+        usuarioUid: _currentUser.uid,
         nombreUsuario: nombreUsuario,
         texto: texto,
         fecha: DateTime.now(),
-      );
+      ));
 
-      await _firestoreService.addPregunta(pregunta);
       _preguntaController.clear();
     } catch (e) {
-      print('Error al obtener el nombre del usuario: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    } finally {
+      setState(() => _isSending = false);
     }
-
-    setState(() => _isSending = false);
   }
 
   @override
