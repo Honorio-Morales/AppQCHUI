@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "423458236232",
+    "project_id": "qchui-1d689",
+    "storage_bucket": "qchui-1d689.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423458236232:android:f98d63ceab2793627cb57d",
+        "android_client_info": {
+          "package_name": "com.example.appchua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg9eDXISbSV6INqslsrWhphgZLXRv2344"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

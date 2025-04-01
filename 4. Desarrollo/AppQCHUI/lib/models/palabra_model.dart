@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Palabra {
-  final String id; // ID del documento en Firestore
+  final String id;
   final String palabraEspanol;
   final String palabraQuechua;
   final String? categoria;
@@ -19,8 +19,8 @@ class Palabra {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Palabra(
       id: doc.id,
-      palabraEspanol: data['espanol'] ?? '',
-      palabraQuechua: data['quechua'] ?? '',
+      palabraEspanol: data['palabraEspanol'] ?? '', // <-- Corregido
+      palabraQuechua: data['palabraQuechua'] ?? '', // <-- Corregido
       categoria: data['categoria'],
       ejemplo: data['ejemplo'],
     );
@@ -28,8 +28,8 @@ class Palabra {
 
   Map<String, dynamic> toMap() {
     return {
-      'espanol': palabraEspanol,
-      'quechua': palabraQuechua,
+      'palabraEspanol': palabraEspanol, // <-- Corregido
+      'palabraQuechua': palabraQuechua, // <-- Corregido
       'categoria': categoria,
       'ejemplo': ejemplo,
     };
