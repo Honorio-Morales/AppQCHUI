@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:AppQCHUI/screens/dictionary_screen.dart';
 import 'package:AppQCHUI/screens/questions_screen.dart';
 import 'package:AppQCHUI/screens/login_screen.dart';
 import 'package:AppQCHUI/screens/register_screen.dart';
+import 'package:AppQCHUI/services/firestore_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Set<String> favoritos = {};
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _currentUser;
 
@@ -28,20 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     });
-  }
-
-  void onToggleFavorite(String palabra) {
-    setState(() {
-      if (favoritos.contains(palabra)) {
-        favoritos.remove(palabra);
-      } else {
-        favoritos.add(palabra);
-      }
-    });
-  }
-
-  Future<void> _signOut() async {
-    await _auth.signOut();
   }
 
   Widget _buildUserAvatar() {
@@ -85,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          _signOut();
+                          _auth.signOut();
                           Navigator.pop(context);
                         },
                         child: const Text('Salir'),
@@ -202,10 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DictionaryScreen(
-                      favoritos: favoritos,
-                      onToggleFavorite: onToggleFavorite,
-                    ),
+                    builder: (context) => const DictionaryScreen(),
                   ),
                 );
               },
@@ -230,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => QuestionsScreen()),
+                  MaterialPageRoute(builder: (context) => const QuestionsScreen()),
                 );
               },
               style: OutlinedButton.styleFrom(
@@ -250,10 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DictionaryScreen(
-                        favoritos: favoritos,
-                        onToggleFavorite: onToggleFavorite,
-                      ),
+                      builder: (context) => const DictionaryScreen(),
                     ),
                   );
                 },

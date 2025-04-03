@@ -10,6 +10,9 @@ import 'package:AppQCHUI/screens/info_screen.dart';
 import 'package:AppQCHUI/screens/login_screen.dart';
 import 'package:AppQCHUI/screens/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:AppQCHUI/services/auth_service.dart';
+import 'package:AppQCHUI/services/firestore_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,34 +27,40 @@ class TraduchuaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'QChui',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 241, 221, 221),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFEE7072),
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(create: (_) => AuthService()),
+        Provider<FirestoreService>(create: (_) => FirestoreService()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'QChui',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 241, 221, 221),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xFFEE7072),
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFFEE7072),
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Color.fromARGB(255, 72, 48, 49),
           ),
         ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFFEE7072),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Color.fromARGB(255, 72, 48, 49),
-        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const AuthWrapper(),
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const RegisterScreen(),
+          '/main': (context) => const MainNavigationWrapper(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => AuthWrapper(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
-        '/main': (context) => const MainNavigationWrapper(),
-      },
     );
   }
 }
@@ -71,7 +80,6 @@ class AuthWrapper extends StatelessWidget {
         }
         
         if (snapshot.hasData) {
-          // Redirige al flujo principal
           Future.microtask(() {
             Navigator.pushReplacementNamed(context, '/main');
           });
@@ -80,7 +88,6 @@ class AuthWrapper extends StatelessWidget {
           );
         }
         
-        // Muestra HomeScreen para usuarios no autenticados
         return const HomeScreen();
       },
     );
@@ -95,46 +102,29 @@ class MainNavigationWrapper extends StatefulWidget {
 }
 
 class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
-  final Set<String> _favoritos = {};
   final FirebaseAuth _auth = FirebaseAuth.instance;
   int _selectedIndex = 0;
   User? _currentUser;
   late final List<Widget> _screens;
 
-@override
-void initState() {
-  super.initState();
-  _currentUser = _auth.currentUser;
-  _auth.authStateChanges().listen((User? user) {
-    if (mounted) {
-      setState(() => _currentUser = user);
-    }
-  });
-  
-  _screens = [
-    const HomeScreen(),
-    DictionaryScreen(
-      favoritos: _favoritos,
-      onToggleFavorite: _toggleFavorite,
-    ),
-    QuestionsScreen(), 
-    CommunityScreen(),
-    FavoritesScreen(
-      favoritos: _favoritos,
-      onRemoveFavorite: _toggleFavorite,
-    ),
-    const InfoScreen(),
-  ];
-}
-
-  void _toggleFavorite(String palabra) {
-    setState(() {
-      if (_favoritos.contains(palabra)) {
-        _favoritos.remove(palabra);
-      } else {
-        _favoritos.add(palabra);
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = _auth.currentUser;
+    _auth.authStateChanges().listen((User? user) {
+      if (mounted) {
+        setState(() => _currentUser = user);
       }
     });
+    
+    _screens = [
+      const HomeScreen(),
+      const DictionaryScreen(),
+      const QuestionsScreen(), 
+      const CommunityScreen(),
+      const FavoritesScreen(),
+      const InfoScreen(),
+    ];
   }
 
   Future<void> _signOut() async {

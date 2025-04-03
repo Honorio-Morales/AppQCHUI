@@ -1,45 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:AppQCHUI/models/palabra_model.dart';
-import 'package:AppQCHUI/services/firestore_service.dart';
-import 'package:AppQCHUI/screens/favorites_screen.dart';
+import '../models/palabra_model.dart';
+import '../models/favorito_model.dart';
+import '../services/firestore_service.dart';
 
 class DictionaryScreen extends StatefulWidget {
-  final Set<String> favoritos;
-  final Function(String) onToggleFavorite;
-
-  const DictionaryScreen({
-    super.key,
-    required this.favoritos,
-    required this.onToggleFavorite,
-  });
+  const DictionaryScreen({super.key});
 
   @override
-  _DictionaryScreenState createState() => _DictionaryScreenState();
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
 }
 
 class _DictionaryScreenState extends State<DictionaryScreen> {
-  final FirestoreService _firestoreService = FirestoreService();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _searchController = TextEditingController();
   late Stream<List<Palabra>> _palabrasStream;
-  User? _currentUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
-    _currentUser = _auth.currentUser;
-    _palabrasStream = _firestoreService.getPalabras();
+    _palabrasStream = Provider.of<FirestoreService>(context, listen: false).getPalabras();
   }
 
   void _onSearchChanged() {
     final query = _searchController.text.trim();
     setState(() {
       _palabrasStream = query.isEmpty
-          ? _firestoreService.getPalabras()
-          : Stream.fromFuture(_firestoreService.buscarPalabras(query));
+          ? Provider.of<FirestoreService>(context, listen: false).getPalabras()
+          : Stream.fromFuture(
+              Provider.of<FirestoreService>(context, listen: false).buscarPalabras(query));
     });
+  }
+
+  Future<void> _toggleFavorite(Palabra palabra) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Inicia sesión para guardar favoritos')));
+      return;
+    }
+
+    final firestoreService = Provider.of<FirestoreService>(context, listen: false);
+    final isFavorite = await firestoreService
+        .esFavorito(user.uid, palabra.id)
+        .first;
+
+    if (isFavorite) {
+      final favoritoId = await firestoreService.getFavoritoId(user.uid, palabra.id);
+      if (favoritoId != null) {
+        await firestoreService.removeFavorito(favoritoId);
+      }
+    } else {
+      await firestoreService.addFavorito(Favorito(
+        id: '',
+        usuarioUid: user.uid,
+        palabraId: palabra.id,
+        fecha: DateTime.now(),
+      ));
+    }
   }
 
   @override
@@ -51,25 +70,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Diccionario Quechua-Español"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite, color: Colors.red),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FavoritesScreen(
-                    favoritos: widget.favoritos,
-                    onRemoveFavorite: widget.onToggleFavorite,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
       body: Column(
         children: [
           Padding(
@@ -113,8 +113,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   }
 
   Widget _buildWordCard(Palabra palabra) {
-    final esFavorito = widget.favoritos.contains(palabra.id);
-
+    final user = _auth.currentUser;
+    
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -145,16 +145,35 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  if (palabra.ejemplo != null) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      'Ejemplo: ${palabra.ejemplo}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ]
                 ],
               ),
             ),
-            IconButton(
-              icon: Icon(
-                esFavorito ? Icons.favorite : Icons.favorite_border,
-                color: esFavorito ? Colors.red : Colors.grey,
+            if (user != null)
+              StreamBuilder<bool>(
+                stream: Provider.of<FirestoreService>(context)
+                    .esFavorito(user.uid, palabra.id),
+                builder: (context, snapshot) {
+                  final isFavorite = snapshot.data ?? false;
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () => _toggleFavorite(palabra),
+                  );
+                },
               ),
-              onPressed: () => widget.onToggleFavorite(palabra.id),
-            ),
           ],
         ),
       ),

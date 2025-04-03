@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:AppQCHUI/models/pregunta_model.dart';
 import 'package:AppQCHUI/services/firestore_service.dart';
 
@@ -12,7 +13,6 @@ class CommunityScreen extends StatefulWidget {
 }
 
 class _CommunityScreenState extends State<CommunityScreen> {
-  final FirestoreService _firestoreService = FirestoreService();
   final TextEditingController _preguntaController = TextEditingController();
   final User? _currentUser = FirebaseAuth.instance.currentUser;
   bool _isSending = false;
@@ -34,32 +34,34 @@ class _CommunityScreenState extends State<CommunityScreen> {
       // Obtener o crear documento de usuario
       final userDoc = await FirebaseFirestore.instance
           .collection('usuarios')
-          .doc(_currentUser.uid)
+          .doc(_currentUser!.uid)
           .get();
 
       String nombreUsuario;
       if (!userDoc.exists) {
-        nombreUsuario = _currentUser.email?.split('@')[0] ?? 'Usuario';
+        nombreUsuario = _currentUser!.email?.split('@')[0] ?? 'Usuario';
         await FirebaseFirestore.instance
             .collection('usuarios')
-            .doc(_currentUser.uid)
+            .doc(_currentUser!.uid)
             .set({
           'nombre': nombreUsuario,
-          'email': _currentUser.email,
+          'email': _currentUser!.email,
         });
       } else {
         nombreUsuario = userDoc['nombre'] ?? 
-            _currentUser.email?.split('@')[0] ?? 
+            _currentUser!.email?.split('@')[0] ?? 
             'Usuario';
       }
 
-      await _firestoreService.addPregunta(Pregunta(
-        id: '',
-        usuarioUid: _currentUser.uid,
-        nombreUsuario: nombreUsuario,
-        texto: texto,
-        fecha: DateTime.now(),
-      ));
+      await Provider.of<FirestoreService>(context, listen: false).addPregunta(
+        Pregunta(
+          id: '',
+          usuarioUid: _currentUser!.uid,
+          nombreUsuario: nombreUsuario,
+          texto: texto,
+          fecha: DateTime.now(),
+        ),
+      );
 
       _preguntaController.clear();
     } catch (e) {
@@ -103,7 +105,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
           Expanded(
             child: StreamBuilder<List<Pregunta>>(
-              stream: _firestoreService.getPreguntas(),
+              stream: Provider.of<FirestoreService>(context).getPreguntas(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
@@ -135,8 +137,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              pregunta.nombreUsuario,  // 🔹 Ahora usamos directamente el nombre guardado
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+              pregunta.nombreUsuario,
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
             ),
             const SizedBox(height: 5),
             Text(
