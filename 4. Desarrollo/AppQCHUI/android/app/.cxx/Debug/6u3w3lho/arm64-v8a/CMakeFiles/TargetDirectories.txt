@@ -1,2 +1,0 @@
-C:/Users/LENOVO/Documents/proyectos para app movil/AppQuechua/AppQCHUI/4. Desarrollo/AppQCHUI/4. Desarrollo/AppQCHUI/android/app/.cxx/Debug/6u3w3lho/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/LENOVO/Documents/proyectos para app movil/AppQuechua/AppQCHUI/4. Desarrollo/AppQCHUI/4. Desarrollo/AppQCHUI/android/app/.cxx/Debug/6u3w3lho/arm64-v8a/CMakeFiles/rebuild_cache.dir
