@@ -1,0 +1,1052 @@
+[
+  {
+    "id": 1,
+    "quechua": "Armay",
+    "traduccion": "bañar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 2,
+    "quechua": "Akllay",
+    "traduccion": "escoger",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 3,
+    "quechua": "Allay",
+    "traduccion": "escarbar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 4,
+    "quechua": "Allichay",
+    "traduccion": "ordenar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 5,
+    "quechua": "Apay",
+    "traduccion": "llevar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 6,
+    "quechua": "Astay",
+    "traduccion": "trasladar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 7,
+    "quechua": "Atiy",
+    "traduccion": "poder",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 8,
+    "quechua": "Away",
+    "traduccion": "tejer (tejido andino)",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 9,
+    "quechua": "Aysay",
+    "traduccion": "jalar, tirar",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 10,
+    "quechua": "Chayay",
+    "traduccion": "llegar a un lugar / llegar los alimentos a su cocción perfecta",
+    "categoria": "verbo",
+    "tipo_vocalico": "trivocálico"
+  },
+  {
+    "id": 11,
+    "quechua": "Cheqniy",
+    "traduccion": "odiar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 12,
+    "quechua": "Cheqnikuy",
+    "traduccion": "odiar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 13,
+    "quechua": "Chhallchay",
+    "traduccion": "ebullición del agua al estar sometido al fuego",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 14,
+    "quechua": "Chinpay",
+    "traduccion": "cruzar el puente, vadear",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 15,
+    "quechua": "Chulluchiy",
+    "traduccion": "hacer remojar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 16,
+    "quechua": "Churay",
+    "traduccion": "poner",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 17,
+    "quechua": "Churpuy",
+    "traduccion": "colocar sobre el fogón u otro tipo de cocina la olla dispuesta con los alimentos para su cocción",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 18,
+    "quechua": "Ch’aqchuy",
+    "traduccion": "regar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 19,
+    "quechua": "Ch’akakakay",
+    "traduccion": "dolor con punzadas, escalofríos",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 20,
+    "quechua": "Ch’eqtay",
+    "traduccion": "partir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 21,
+    "quechua": "Ch’inkuy",
+    "traduccion": "colocar una esfera (ch’inku) pequeña en el vientre, después del parto",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 22,
+    "quechua": "Ch’irway",
+    "traduccion": "exprimir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 23,
+    "quechua": "Ch’umay",
+    "traduccion": "escurrir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 24,
+    "quechua": "Ch’ustiy",
+    "traduccion": "despojar, desvestir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 25,
+    "quechua": "Ch’uyanay",
+    "traduccion": "enjuagar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 26,
+    "quechua": "Ch’utiy",
+    "traduccion": "despojar de algo",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 27,
+    "quechua": "Hamuy",
+    "traduccion": "venir, llegar de allá para acá",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 28,
+    "quechua": "Hank’ay",
+    "traduccion": "tostar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 29,
+    "quechua": "Hanllay",
+    "traduccion": "abrir la boca",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 30,
+    "quechua": "Hap’iy",
+    "traduccion": "agarrar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 31,
+    "quechua": "Hasp’iy",
+    "traduccion": "escarbar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 32,
+    "quechua": "Haykuy",
+    "traduccion": "entrar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 33,
+    "quechua": "Hisp’akuy",
+    "traduccion": "miccionar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 34,
+    "quechua": "Horqoy",
+    "traduccion": "sacar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 35,
+    "quechua": "Hunt’apay",
+    "traduccion": "añadir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 36,
+    "quechua": "Huñuy",
+    "traduccion": "juntar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 37,
+    "quechua": "Kanay",
+    "traduccion": "quemar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 38,
+    "quechua": "Kichay",
+    "traduccion": "abrir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 39,
+    "quechua": "Kuchuy",
+    "traduccion": "cortar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 40,
+    "quechua": "Kunpay",
+    "traduccion": "tumbar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 41,
+    "quechua": "Kutay",
+    "traduccion": "moler",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 42,
+    "quechua": "Kutiy",
+    "traduccion": "regresar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 43,
+    "quechua": "Kacharpariy",
+    "traduccion": "despedir, soltar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 44,
+    "quechua": "Khakuy",
+    "traduccion": "desmenuzar por fricción de la mano",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 45,
+    "quechua": "Khallay",
+    "traduccion": "tajar, cortar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 46,
+    "quechua": "K’amiy",
+    "traduccion": "insultar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 47,
+    "quechua": "K’utuchiy",
+    "traduccion": "cortar con tijera",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 48,
+    "quechua": "K’utuchikuy",
+    "traduccion": "cortarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 49,
+    "quechua": "Last’ay",
+    "traduccion": "sacar algo del agua",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 50,
+    "quechua": "Llakikuy",
+    "traduccion": "preocuparse, entristecerse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 51,
+    "quechua": "Llank’ay",
+    "traduccion": "trabajar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 52,
+    "quechua": "Llat’ay",
+    "traduccion": "desnudar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 53,
+    "quechua": "Lluch’uy",
+    "traduccion": "pelar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 54,
+    "quechua": "Mananchakuy",
+    "traduccion": "justificarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 55,
+    "quechua": "Maqay",
+    "traduccion": "pegar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 56,
+    "quechua": "Maqanakuy",
+    "traduccion": "pelearse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 57,
+    "quechua": "Maqchiy",
+    "traduccion": "lavar elementos rígidos",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 58,
+    "quechua": "Masay",
+    "traduccion": "tender ropa / hacer pan",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 59,
+    "quechua": "Mast’ay",
+    "traduccion": "tender",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 60,
+    "quechua": "Meqey",
+    "traduccion": "pujar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 61,
+    "quechua": "Mikhuy",
+    "traduccion": "comer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 62,
+    "quechua": "Munthuy / qotoy / huñuy",
+    "traduccion": "amontonar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 63,
+    "quechua": "Masara ñit’iy",
+    "traduccion": "acción de hacer el queso",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 64,
+    "quechua": "Malliy",
+    "traduccion": "probar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 65,
+    "quechua": "Mikhuy",
+    "traduccion": "comer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+    {
+    "id": 66,
+    "quechua": "Nanay",
+    "traduccion": "dolor",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 67,
+    "quechua": "Napaykuy",
+    "traduccion": "saludar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 68,
+    "quechua": "Niy",
+    "traduccion": "decir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 69,
+    "quechua": "Ñawinchay",
+    "traduccion": "leer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 70,
+    "quechua": "Ñit’iy",
+    "traduccion": "aplastar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 71,
+    "quechua": "Onqokuy/wachakuy",
+    "traduccion": "dar a luz",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 72,
+    "quechua": "Pahay",
+    "traduccion": "fajar a la parturienta",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 73,
+    "quechua": "Pakay",
+    "traduccion": "ocultar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 74,
+    "quechua": "Pichay",
+    "traduccion": "barrer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 75,
+    "quechua": "Puñuy",
+    "traduccion": "dormir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 76,
+    "quechua": "Puriy",
+    "traduccion": "caminar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 77,
+    "quechua": "Pusay",
+    "traduccion": "guiar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 78,
+    "quechua": "Puskay",
+    "traduccion": "hilar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 79,
+    "quechua": "Phasiy",
+    "traduccion": "sancochar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 80,
+    "quechua": "Phaway",
+    "traduccion": "correr",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 81,
+    "quechua": "Phiñakuy",
+    "traduccion": "enfadarse, enojarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 82,
+    "quechua": "Phiñapayay",
+    "traduccion": "mostrar molestia continuamente hacia alguien",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 83,
+    "quechua": "Phiñachinakuy",
+    "traduccion": "ofenderse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 84,
+    "quechua": "Phukuy",
+    "traduccion": "soplar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 85,
+    "quechua": "P’achakuy",
+    "traduccion": "vestirse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 86,
+    "quechua": "P’anpay",
+    "traduccion": "enterrar o cubrir con alguna prenda para que no sea visible",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 87,
+    "quechua": "P’istuy",
+    "traduccion": "abrigar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 88,
+    "quechua": "Qallariy",
+    "traduccion": "empezar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 89,
+    "quechua": "Qarqoy",
+    "traduccion": "expulsar, botar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 90,
+    "quechua": "Qaywiy",
+    "traduccion": "remover",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 91,
+    "quechua": "Qachiy",
+    "traduccion": "remover el grano que se viene tostando",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 92,
+    "quechua": "Qonqay",
+    "traduccion": "olvidar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 93,
+    "quechua": "Qoy",
+    "traduccion": "dar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 94,
+    "quechua": "Qolliy",
+    "traduccion": "acción de preservar la brasa",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 95,
+    "quechua": "Qhaliyay",
+    "traduccion": "sanar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 96,
+    "quechua": "Qhaqoy",
+    "traduccion": "frotar, sobar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 97,
+    "quechua": "Qhaway",
+    "traduccion": "mirar, observar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 98,
+    "quechua": "Qhetuy",
+    "traduccion": "friccionar, raspar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 99,
+    "quechua": "Q’allay",
+    "traduccion": "tajar los tubérculos",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 100,
+    "quechua": "Q’apachiy",
+    "traduccion": "aromatizar con humo",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 101,
+    "quechua": "Q’aymachiy",
+    "traduccion": "someter algo al agua para quitar el sabor",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 102,
+    "quechua": "Rantiy",
+    "traduccion": "comprar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 103,
+    "quechua": "Reqsichikuy",
+    "traduccion": "presentarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 104,
+    "quechua": "Reqsiy",
+    "traduccion": "conocer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 105,
+    "quechua": "Rikuy",
+    "traduccion": "ver",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 106,
+    "quechua": "Rimay",
+    "traduccion": "hablar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 107,
+    "quechua": "Riy",
+    "traduccion": "ir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 108,
+    "quechua": "Ruphachiy",
+    "traduccion": "hacer quemar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 109,
+    "quechua": "Rutuy",
+    "traduccion": "cortar el cabello, esquilar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 110,
+    "quechua": "Runtuy",
+    "traduccion": "poner huevo",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 111,
+    "quechua": "Ruway",
+    "traduccion": "hacer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 112,
+    "quechua": "Samay",
+    "traduccion": "descansar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 113,
+    "quechua": "Saruy",
+    "traduccion": "pisar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 114,
+    "quechua": "Sat’iy",
+    "traduccion": "meter, introducir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 115,
+    "quechua": "Sayk’uy",
+    "traduccion": "cansarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 116,
+    "quechua": "Seqay",
+    "traduccion": "subir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 117,
+    "quechua": "Siray",
+    "traduccion": "coser",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 118,
+    "quechua": "Suysuy",
+    "traduccion": "tamizar, colar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 119,
+    "quechua": "Sut’uy",
+    "traduccion": "chorrear",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 120,
+    "quechua": "Sut’uchiy",
+    "traduccion": "hacer chorrear",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 121,
+    "quechua": "Tapukuy",
+    "traduccion": "preguntar con amabilidad",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 122,
+    "quechua": "Tapuy",
+    "traduccion": "preguntar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 123,
+    "quechua": "Taqey",
+    "traduccion": "almacenar los productos agrícolas",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 124,
+    "quechua": "Tiyay",
+    "traduccion": "vivir, sentarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 125,
+    "quechua": "Tukuy",
+    "traduccion": "terminar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 126,
+    "quechua": "Tunpay",
+    "traduccion": "inculpar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 127,
+    "quechua": "Tupay",
+    "traduccion": "encontrarse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 128,
+    "quechua": "Tupanachiy",
+    "traduccion": "comparar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 129,
+    "quechua": "Tuyruy",
+    "traduccion": "marcar, señalar, resaltar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 130,
+    "quechua": "Theqtichiy",
+    "traduccion": "freír",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 131,
+    "quechua": "Thoqay",
+    "traduccion": "escupir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 132,
+    "quechua": "T’ikray",
+    "traduccion": "voltear, traducir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 133,
+    "quechua": "T’aqsay",
+    "traduccion": "lavar, referente a objetos de tela",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 134,
+    "quechua": "T’inpuchiy",
+    "traduccion": "hacer hervir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 135,
+    "quechua": "Uyariy",
+    "traduccion": "escuchar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 136,
+    "quechua": "Uraqay",
+    "traduccion": "bajar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 137,
+    "quechua": "Wachakuy",
+    "traduccion": "dar a luz",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 138,
+    "quechua": "Walthay",
+    "traduccion": "fajar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 139,
+    "quechua": "Waqaychay",
+    "traduccion": "guardar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 140,
+    "quechua": "Waqay",
+    "traduccion": "llorar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 141,
+    "quechua": "Wayk’uy",
+    "traduccion": "cocinar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 142,
+    "quechua": "Watay",
+    "traduccion": "amarrar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 143,
+    "quechua": "Wichay",
+    "traduccion": "subir",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 144,
+    "quechua": "Wikch’ukuy",
+    "traduccion": "caerse",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 145,
+    "quechua": "Wikch’uy",
+    "traduccion": "botar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 146,
+    "quechua": "Willay",
+    "traduccion": "avisar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 147,
+    "quechua": "Wiñay",
+    "traduccion": "crecer",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 148,
+    "quechua": "Wisk’uy",
+    "traduccion": "señalar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 149,
+    "quechua": "Yachachiy",
+    "traduccion": "enseñar",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  },
+  {
+    "id": 150,
+    "quechua": "Yachay",
+    "traduccion": "saber",
+    "categoria": "verbo",
+    "tipo_vocalico": "pentavocálico"
+  }
+]
