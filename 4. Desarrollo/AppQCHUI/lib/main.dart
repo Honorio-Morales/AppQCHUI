@@ -4,7 +4,7 @@ import 'firebase_options.dart';
 import 'package:AppQCHUI/screens/home_screen.dart';
 import 'package:AppQCHUI/screens/dictionary_screen.dart';
 import 'package:AppQCHUI/screens/favorites_screen.dart';
-import 'package:AppQCHUI/screens/questions_screen.dart';
+import 'package:AppQCHUI/screens/activities_screen.dart';
 import 'package:AppQCHUI/screens/comunity_screen.dart';
 import 'package:AppQCHUI/screens/info_screen.dart';
 import 'package:AppQCHUI/screens/login_screen.dart';
@@ -120,7 +120,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
     _screens = [
       const HomeScreen(),
       const DictionaryScreen(),
-      const QuestionsScreen(), 
+      const ExerciseScreen(), 
       const CommunityScreen(),
       const FavoritesScreen(),
       const InfoScreen(),
