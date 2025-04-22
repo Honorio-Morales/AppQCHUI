@@ -1,0 +1,1059 @@
+[
+    {
+      "id": 603,
+      "quechua": "Maki ruk’ana",
+      "traduccion": "dedos de la mano",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 604,
+      "quechua": "Maki t’aqlla",
+      "traduccion": "palma de la mano",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 605,
+      "quechua": "Mak’alli",
+      "traduccion": "brazo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 606,
+      "quechua": "Mat´i",
+      "traduccion": "frente",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 607,
+      "quechua": "Melq’oti",
+      "traduccion": "faringe",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 608,
+      "quechua": "Misu",
+      "traduccion": "meconio",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 609,
+      "quechua": "Moqo",
+      "traduccion": "rodilla",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 610,
+      "quechua": "Muchhi",
+      "traduccion": "acné",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 611,
+      "quechua": "Much’u",
+      "traduccion": "nuca o cogote",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 612,
+      "quechua": "Ninri laphra",
+      "traduccion": "pabellón de la oreja",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 613,
+      "quechua": "Ninri, rinri",
+      "traduccion": "oído",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 614,
+      "quechua": "Ñañu ch’unchul",
+      "traduccion": "intestino delgado",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 615,
+      "quechua": "Ñawi qara",
+      "traduccion": "párpado",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 616,
+      "quechua": "Ñawi ruru",
+      "traduccion": "glóbulo ocular",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 617,
+      "quechua": "Ñawi",
+      "traduccion": "ojo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 618,
+      "quechua": "Ñosqhon",
+      "traduccion": "seso",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 619,
+      "quechua": "Ñuñu",
+      "traduccion": "mama de las mujeres y de los animales",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 620,
+      "quechua": "Oqoti",
+      "traduccion": "recto",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 621,
+      "quechua": "Pantaq ch’unchul",
+      "traduccion": "apéndice",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 622,
+      "quechua": "Puputi, pupu",
+      "traduccion": "ombligo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 623,
+      "quechua": "Phillullo",
+      "traduccion": "rótula",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 624,
+      "quechua": "Qallu",
+      "traduccion": "lengua",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 625,
+      "quechua": "Qeri",
+      "traduccion": "costra",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 626,
+      "quechua": "Qharmin",
+      "traduccion": "omóplato",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 627,
+      "quechua": "Qhasqo",
+      "traduccion": "pecho",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 628,
+      "quechua": "Qhechiphra",
+      "traduccion": "pestaña",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 629,
+      "quechua": "Qheñipa",
+      "traduccion": "cejas",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 630,
+      "quechua": "Qholto",
+      "traduccion": "esputo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 631,
+      "quechua": "Qhoña",
+      "traduccion": "moco",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 632,
+      "quechua": "Q’echu",
+      "traduccion": "ciática, lumbalgia",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 633,
+      "quechua": "Q’ella",
+      "traduccion": "cicatriz",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 634,
+      "quechua": "Q’eya",
+      "traduccion": "pus",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 635,
+      "quechua": "Q’orota",
+      "traduccion": "pene",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 636,
+      "quechua": "Q’oyo",
+      "traduccion": "moretón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 637,
+      "quechua": "Raka",
+      "traduccion": "vagina",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 638,
+      "quechua": "Rakhu ch’unchul",
+      "traduccion": "intestino grueso",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 639,
+      "quechua": "Rikra",
+      "traduccion": "hombro",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 640,
+      "quechua": "Ruk’ana",
+      "traduccion": "dedo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 641,
+      "quechua": "Rurun",
+      "traduccion": "riñón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 642,
+      "quechua": "Samay",
+      "traduccion": "aliento",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 643,
+      "quechua": "Senqa suphu",
+      "traduccion": "bello nasal",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 644,
+      "quechua": "Senqa t’oqo",
+      "traduccion": "fosas nasales",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 645,
+      "quechua": "Senqa",
+      "traduccion": "nariz",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 646,
+      "quechua": "Supi",
+      "traduccion": "pedo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 647,
+      "quechua": "Siki",
+      "traduccion": "trasero",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 648,
+      "quechua": "Siki chupa",
+      "traduccion": "coxis",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 649,
+      "quechua": "Siki papa",
+      "traduccion": "glúteos",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 650,
+      "quechua": "Sillki",
+      "traduccion": "arteria aorta",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 651,
+      "quechua": "Sillu",
+      "traduccion": "uña",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 652,
+      "quechua": "Simi",
+      "traduccion": "boca",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 653,
+      "quechua": "Sip’uti",
+      "traduccion": "ano",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 654,
+      "quechua": "Sirk’a",
+      "traduccion": "vena",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 655,
+      "quechua": "Sirp’i",
+      "traduccion": "labio superior",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 656,
+      "quechua": "Sonqo",
+      "traduccion": "corazón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 657,
+      "quechua": "Soqo",
+      "traduccion": "cana",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 658,
+      "quechua": "Sorq’an",
+      "traduccion": "pulmón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 659,
+      "quechua": "Sunkha",
+      "traduccion": "bigote",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 660,
+      "quechua": "Suphu",
+      "traduccion": "bello",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 661,
+      "quechua": "Takillpa",
+      "traduccion": "talón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 662,
+      "quechua": "Teqnin",
+      "traduccion": "cadera",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 663,
+      "quechua": "Tikti",
+      "traduccion": "verruga",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 664,
+      "quechua": "Tikuña",
+      "traduccion": "clavícula",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 665,
+      "quechua": "Tonqor",
+      "traduccion": "garganta",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 666,
+      "quechua": "Tullu",
+      "traduccion": "hueso",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 667,
+      "quechua": "Tutu",
+      "traduccion": "pezón",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 668,
+      "quechua": "Thoqay",
+      "traduccion": "saliva",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 669,
+      "quechua": "Uma",
+      "traduccion": "cabeza",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 670,
+      "quechua": "Uma puhu",
+      "traduccion": "fontanela",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 671,
+      "quechua": "Uma qara",
+      "traduccion": "cuero cabelludo",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 672,
+      "quechua": "Upichu onqoy",
+      "traduccion": "anemia",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 673,
+      "quechua": "Uthapi",
+      "traduccion": "placenta",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 674,
+      "quechua": "Uya p’uti",
+      "traduccion": "pómulos",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 675,
+      "quechua": "Wallwak’u, wallak’u",
+      "traduccion": "axila",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 676,
+      "quechua": "Wanthi",
+      "traduccion": "sífilis",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 677,
+      "quechua": "Waqo",
+      "traduccion": "mandíbula, muela",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 678,
+      "quechua": "Waqsa",
+      "traduccion": "diente canino muy desarrollado, diente superpuesto",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 679,
+      "quechua": "Waqtan",
+      "traduccion": "costilla",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 680,
+      "quechua": "Wasa",
+      "traduccion": "espalda",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 681,
+      "quechua": "Welq’achu",
+      "traduccion": "conjuntivitis purulenta",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 682,
+      "quechua": "Weqaw",
+      "traduccion": "cintura",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 683,
+      "quechua": "Weqe",
+      "traduccion": "lágrima",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 684,
+      "quechua": "Wirp’a",
+      "traduccion": "labio inferior",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 685,
+      "quechua": "Yawar",
+      "traduccion": "sangre",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 686,
+      "quechua": "Allin",
+      "traduccion": "bien",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 687,
+      "quechua": "Askha",
+      "traduccion": "bastante",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 688,
+      "quechua": "Ch’aki",
+      "traduccion": "seco",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 689,
+      "quechua": "Ch’apa",
+      "traduccion": "sin sabor",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 690,
+      "quechua": "Ch’uya",
+      "traduccion": "claro, puro",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 691,
+      "quechua": "Hanku",
+      "traduccion": "crudo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 692,
+      "quechua": "Hatuchachaq",
+      "traduccion": "los más grandes",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 693,
+      "quechua": "Hatun",
+      "traduccion": "grande",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 694,
+      "quechua": "Huch’uy",
+      "traduccion": "pequeño",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 695,
+      "quechua": "Kuraq",
+      "traduccion": "mayor",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 696,
+      "quechua": "Kusi",
+      "traduccion": "alegre",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 697,
+      "quechua": "Kharka",
+      "traduccion": "suciedad impregnada, solidificada",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 698,
+      "quechua": "Khawi, khawchi",
+      "traduccion": "alimento a medio cocinar",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 699,
+      "quechua": "Khullu",
+      "traduccion": "tubérculo menudos",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 700,
+      "quechua": "Khutu",
+      "traduccion": "frío",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 701,
+      "quechua": "Khuyay",
+      "traduccion": "triste",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 702,
+      "quechua": "Lonla",
+      "traduccion": "tonta",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 703,
+      "quechua": "Llakisqa",
+      "traduccion": "preocupado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 704,
+      "quechua": "Llanp’u",
+      "traduccion": "suave",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 705,
+      "quechua": "LLasa",
+      "traduccion": "pesante",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 706,
+      "quechua": "Llinphuy",
+      "traduccion": "limpio",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 707,
+      "quechua": "Llulla",
+      "traduccion": "mentiroso",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 708,
+      "quechua": "Machu",
+      "traduccion": "viejo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 709,
+      "quechua": "Makiyuq",
+      "traduccion": "cleptómano",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 710,
+      "quechua": "Malta",
+      "traduccion": "mediano (animales)",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 711,
+      "quechua": "Manchasqa",
+      "traduccion": "asustado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 712,
+      "quechua": "Maq’a",
+      "traduccion": "comida o alimento guardado y pasado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 713,
+      "quechua": "Maqt’a",
+      "traduccion": "mozo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 714,
+      "quechua": "Mawk’a",
+      "traduccion": "usado, desgastado, envejecido",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 715,
+      "quechua": "Mana qhali",
+      "traduccion": "enfermo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 716,
+      "quechua": "Mich’a",
+      "traduccion": "tacaño",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 717,
+      "quechua": "Millay",
+      "traduccion": "malo/ feo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 718,
+      "quechua": "Millu",
+      "traduccion": "con poco azúcar",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 719,
+      "quechua": "Misk’i",
+      "traduccion": "dulce",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 720,
+      "quechua": "Mosoq",
+      "traduccion": "nuevo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 721,
+      "quechua": "Murmu",
+      "traduccion": "tubérculo mediano",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "trivocálico"
+    },
+    {
+      "id": 722,
+      "quechua": "Ñawpa",
+      "traduccion": "antiguo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 723,
+      "quechua": "Ñawpaq",
+      "traduccion": "primero, anticipador",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 724,
+      "quechua": "Paru",
+      "traduccion": "de color pardo oscuro producto de la cocción",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 725,
+      "quechua": "Pina",
+      "traduccion": "bastante",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 726,
+      "quechua": "Puñuy siki",
+      "traduccion": "dormilón",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 727,
+      "quechua": "Phiña",
+      "traduccion": "bravo, molesto",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 728,
+      "quechua": "P’osqo",
+      "traduccion": "salado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 729,
+      "quechua": "Qaqa",
+      "traduccion": "saturado, apretado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 730,
+      "quechua": "Qella",
+      "traduccion": "perezoso",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 731,
+      "quechua": "Qhali",
+      "traduccion": "sano",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 732,
+      "quechua": "Qhapaq",
+      "traduccion": "millonario",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 733,
+      "quechua": "Qhasqa",
+      "traduccion": "áspero",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 734,
+      "quechua": "Qhelli",
+      "traduccion": "sucio",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 735,
+      "quechua": "Qhopo wasa",
+      "traduccion": "jorobado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 736,
+      "quechua": "Q’ara",
+      "traduccion": "pelado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 737,
+      "quechua": "Q’ayma",
+      "traduccion": "desabrido",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+    },
+    {
+      "id": 738,
+      "quechua": "Sanp’a",
+      "traduccion": "manso",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 739,
+      "quechua": "Sayk’usqa",
+      "traduccion": "cansado",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 740,
+      "quechua": "Sullk’a",
+      "traduccion": "menor",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 741,
+      "quechua": "Sumaq",
+      "traduccion": "bueno/ rico en sabor",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 742,
+      "quechua": "Suwa",
+      "traduccion": "ratero",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 743,
+      "quechua": "Thunti",
+      "traduccion": "raído",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 744,
+      "quechua": "Tutu",
+      "traduccion": "muy menudo",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 745,
+      "quechua": "Wakcha",
+      "traduccion": "pobre",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 746,
+      "quechua": "Wanpar",
+      "traduccion": "uñas largas",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 747,
+      "quechua": "Waylaka",
+      "traduccion": "mujer inútil en los quehaceres domésticos",
+      "categoria": "adjetivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 748,
+      "quechua": "Wiswi",
+      "traduccion": "mugre producto de la grasa",
+      "categoria": "sustantivo",
+      "tipo_vocalico": "pentavocálico"
+  },
+  {
+      "id": 749,
+      "quechua": "Ama",
+      "traduccion": "no",
+      "categoria": "adverbio",
+      "tipo_vocalico": "trivocálico"
+  },
+  {
+      "id": 750,
+      "quechua": "An",
+      "traduccion": "loc. Adv. entiendo que es así",
+      "categoria": "adverbio",
+      "tipo_vocalico": "trivocálico"
+  },
+  {
+      "id": 751,
+      "quechua": "Arí",
+      "traduccion": "sí",
+      "categoria": "adverbio",
+      "tipo_vocalico": "trivocálico"
+  },
+  {
+      "id": 752,
+      "quechua": "Aw",
+      "traduccion": "sí , denota asentimiento de momento",
+      "categoria": "adverbio",
+      "tipo_vocalico": "trivocálico"
+  },
+  {
+      "id": 753,
+      "quechua": "Chawpi p’unchay",
+      "traduccion": "medio día",
+      "categoria": "adverbio",
+      "tipo_vocalico": "pentavocálico"
+  }
+]
