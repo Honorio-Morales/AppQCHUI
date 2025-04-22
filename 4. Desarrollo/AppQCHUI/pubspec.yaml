@@ -23,7 +23,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0  # MOVER AQUÍ
+  flutter_lints: ^5.0.0  
 
 flutter_native_splash:
   color: "#c39a4c"
@@ -37,3 +37,5 @@ flutter:
     - assets/images/llama.png
     - assets/images/qchui.png
     - assets/images/logoQCHUI.png
+    - assets/verbos.json
+  

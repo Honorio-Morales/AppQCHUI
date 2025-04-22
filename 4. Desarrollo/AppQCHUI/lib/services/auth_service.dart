@@ -68,7 +68,7 @@ class AuthService {
       });
     } catch (e) {
       print("Error al actualizar nombre: $e");
-      throw e;
+      rethrow;
     }
   }
 

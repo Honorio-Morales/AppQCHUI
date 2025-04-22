@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,11 +18,44 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   final TextEditingController _searchController = TextEditingController();
   late Stream<List<Palabra>> _palabrasStream;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<Palabra> _palabrasFromJson = [];
+  bool _showJsonData = false;
 
   @override
   void initState() {
     super.initState();
     _palabrasStream = Provider.of<FirestoreService>(context, listen: false).getPalabras();
+  }
+
+  Future<void> _loadJsonDictionary() async {
+    try {
+      final String data = await rootBundle.loadString('assets/verbos.json');
+      final List<dynamic> jsonList = jsonDecode(data);
+      
+      setState(() {
+        _palabrasFromJson = jsonList.map((item) => Palabra(
+          id: 'json_${item["id"]}',
+          palabraEspanol: item["traduccion"],
+          palabraQuechua: item["quechua"],
+          ejemplo: "Categoría: ${item["categoria"]} (${item["tipo_vocalico"]})",
+        )).toList();
+        _showJsonData = true;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Diccionario local cargado (${_palabrasFromJson.length} palabras)')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al cargar JSON: $e')),
+      );
+    }
+  }
+
+  void _toggleDataSource() {
+    setState(() {
+      _showJsonData = !_showJsonData;
+    });
   }
 
   void _onSearchChanged() {
@@ -70,6 +105,11 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toggleDataSource,
+        child: Icon(_showJsonData ? Icons.cloud : Icons.storage),
+        tooltip: _showJsonData ? 'Mostrar datos en línea' : 'Mostrar datos locales',
+      ),
       body: Column(
         children: [
           Padding(
@@ -86,26 +126,41 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               ),
             ),
           ),
-          Expanded(
-            child: StreamBuilder<List<Palabra>>(
-              stream: _palabrasStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                final palabras = snapshot.data!;
-                return ListView.builder(
-                  itemCount: palabras.length,
-                  itemBuilder: (context, index) {
-                    final palabra = palabras[index];
-                    return _buildWordCard(palabra);
-                  },
-                );
-              },
+          if (_showJsonData && _palabrasFromJson.isEmpty)
+            ElevatedButton(
+              onPressed: _loadJsonDictionary,
+              child: const Text('Cargar Diccionaario trivocalico'),
             ),
+          Expanded(
+            child: _showJsonData
+                ? _palabrasFromJson.isEmpty
+                    ? const Center(child: Text('Presiona el botón para cargar datos locales'))
+                    : ListView.builder(
+                        itemCount: _palabrasFromJson.length,
+                        itemBuilder: (context, index) {
+                          final palabra = _palabrasFromJson[index];
+                          return _buildWordCard(palabra);
+                        },
+                      )
+                : StreamBuilder<List<Palabra>>(
+                    stream: _palabrasStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final palabras = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: palabras.length,
+                        itemBuilder: (context, index) {
+                          final palabra = palabras[index];
+                          return _buildWordCard(palabra);
+                        },
+                      );
+                    },
+                  ),
           ),
         ],
       ),
@@ -126,6 +181,12 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (palabra.id.startsWith('json_'))
+                    Chip(
+                      label: const Text('LOCAL'),
+                      backgroundColor: Colors.amber[100],
+                      labelStyle: const TextStyle(fontSize: 10),
+                    ),
                   Text(
                     palabra.palabraEspanol,
                     style: TextStyle(
@@ -159,7 +220,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 ],
               ),
             ),
-            if (user != null)
+            if (user != null && !palabra.id.startsWith('json_'))
               StreamBuilder<bool>(
                 stream: Provider.of<FirestoreService>(context)
                     .esFavorito(user.uid, palabra.id),
