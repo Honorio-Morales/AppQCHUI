@@ -182,11 +182,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (palabra.id.startsWith('json_'))
-                    Chip(
-                      label: const Text('LOCAL'),
-                      backgroundColor: Colors.amber[100],
-                      labelStyle: const TextStyle(fontSize: 10),
-                    ),
                   Text(
                     palabra.palabraEspanol,
                     style: TextStyle(

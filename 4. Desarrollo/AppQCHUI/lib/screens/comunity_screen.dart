@@ -34,29 +34,29 @@ class _CommunityScreenState extends State<CommunityScreen> {
       // Obtener o crear documento de usuario
       final userDoc = await FirebaseFirestore.instance
           .collection('usuarios')
-          .doc(_currentUser!.uid)
+          .doc(_currentUser.uid)
           .get();
 
       String nombreUsuario;
       if (!userDoc.exists) {
-        nombreUsuario = _currentUser!.email?.split('@')[0] ?? 'Usuario';
+        nombreUsuario = _currentUser.email?.split('@')[0] ?? 'Usuario';
         await FirebaseFirestore.instance
             .collection('usuarios')
-            .doc(_currentUser!.uid)
+            .doc(_currentUser.uid)
             .set({
           'nombre': nombreUsuario,
-          'email': _currentUser!.email,
+          'email': _currentUser.email,
         });
       } else {
         nombreUsuario = userDoc['nombre'] ?? 
-            _currentUser!.email?.split('@')[0] ?? 
+            _currentUser.email?.split('@')[0] ?? 
             'Usuario';
       }
 
       await Provider.of<FirestoreService>(context, listen: false).addPregunta(
         Pregunta(
           id: '',
-          usuarioUid: _currentUser!.uid,
+          usuarioUid: _currentUser.uid,
           nombreUsuario: nombreUsuario,
           texto: texto,
           fecha: DateTime.now(),
