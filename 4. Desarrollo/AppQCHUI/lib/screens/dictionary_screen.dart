@@ -181,7 +181,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (palabra.id.startsWith('json_'))
                   Text(
                     palabra.palabraEspanol,
                     style: TextStyle(
