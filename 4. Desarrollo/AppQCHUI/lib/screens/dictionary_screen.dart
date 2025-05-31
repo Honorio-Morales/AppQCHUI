@@ -107,15 +107,15 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleDataSource,
-        child: Icon(_showJsonData ? Icons.cloud : Icons.storage),
         tooltip: _showJsonData ? 'Mostrar datos en línea' : 'Mostrar datos locales',
+        child: Icon(_showJsonData ? Icons.cloud : Icons.storage),
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: _searchController,
+              controller: _searchController, 
               onChanged: (_) => _onSearchChanged(),
               decoration: InputDecoration(
                 hintText: 'Buscar palabra...',

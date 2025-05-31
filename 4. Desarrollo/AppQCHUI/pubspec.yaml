@@ -1,6 +1,6 @@
-name: AppQCHUI
-description: "A new Flutter project."
-publish_to: 'none'
+name: qchui
+description: "An app that you can use to help you learn the Quechua language."
+publish_to: 'Qchui team'
 
 version: 1.0.0+1
 
@@ -38,4 +38,5 @@ flutter:
     - assets/images/qchui.png
     - assets/images/logoQCHUI.png
     - assets/verbos.json
+  
   

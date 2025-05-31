@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:AppQCHUI/screens/home_screen.dart';
-import 'package:AppQCHUI/screens/dictionary_screen.dart';
-import 'package:AppQCHUI/screens/favorites_screen.dart';
-import 'package:AppQCHUI/screens/activities_screen.dart';
-import 'package:AppQCHUI/screens/comunity_screen.dart';
-import 'package:AppQCHUI/screens/info_screen.dart';
-import 'package:AppQCHUI/screens/login_screen.dart';
-import 'package:AppQCHUI/screens/register_screen.dart';
+import 'package:qchui/screens/home_screen.dart';
+import 'package:qchui/screens/dictionary_screen.dart';
+import 'package:qchui/screens/favorites_screen.dart';
+import 'package:qchui/screens/activities_screen.dart';
+import 'package:qchui/screens/comunity_screen.dart';
+import 'package:qchui/screens/info_screen.dart';
+import 'package:qchui/screens/login_screen.dart';
+import 'package:qchui/screens/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:AppQCHUI/services/auth_service.dart';
-import 'package:AppQCHUI/services/firestore_service.dart';
+import 'package:qchui/services/auth_service.dart';
+import 'package:qchui/services/firestore_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
