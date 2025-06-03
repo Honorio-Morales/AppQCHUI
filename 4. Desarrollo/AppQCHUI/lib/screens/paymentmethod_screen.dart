@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AppQCHUI/widgets/animated_button.dart';
+import 'package:qchui/widgets/animated_button.dart';
 import 'donationsuccess_screen.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            
+
             const Text(
               'Selecciona tu método de pago:',
               style: TextStyle(
@@ -67,7 +67,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            
+
             // Métodos de pago
             _buildPaymentMethod(
               icon: Icons.credit_card,
@@ -87,7 +87,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               isSelected: _selectedMethod == 2,
               onTap: () => setState(() => _selectedMethod = 2),
             ),
-            
+
             const Spacer(),
             AnimatedButton(
               text: "DONAR \$${widget.amount}",
@@ -114,7 +114,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFE63946).withOpacity(0.1) : Colors.white,
+          color: isSelected
+              ? const Color(0xFFE63946).withOpacity(0.1)
+              : Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? const Color(0xFFE63946) : Colors.grey[300]!,
@@ -123,14 +125,19 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         ),
         child: Row(
           children: [
-            Icon(icon, color: isSelected ? const Color(0xFFE63946) : const Color(0xFF1D3557)),
+            Icon(icon,
+                color: isSelected
+                    ? const Color(0xFFE63946)
+                    : const Color(0xFF1D3557)),
             const SizedBox(width: 15),
             Text(
               title,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? const Color(0xFFE63946) : const Color(0xFF1D3557),
+                color: isSelected
+                    ? const Color(0xFFE63946)
+                    : const Color(0xFF1D3557),
               ),
             ),
             const Spacer(),
