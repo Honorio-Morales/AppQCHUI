@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:AppQCHUI/screens/dictionary_screen.dart';
-import 'package:AppQCHUI/screens/login_screen.dart';
-import 'package:AppQCHUI/screens/register_screen.dart';
+import 'package:qchui/screens/dictionary_screen.dart';
+import 'package:qchui/screens/login_screen.dart';
+import 'package:qchui/screens/register_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

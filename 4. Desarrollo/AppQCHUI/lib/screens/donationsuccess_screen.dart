@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AppQCHUI/widgets/animated_button.dart';
+import 'package:qchui/widgets/animated_button.dart';
 
 class DonationSuccessScreen extends StatelessWidget {
   final int amount;

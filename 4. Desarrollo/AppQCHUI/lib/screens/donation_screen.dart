@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'paymentmethod_screen.dart';
-import 'package:AppQCHUI/widgets/animated_button.dart';
+import 'package:qchui/widgets/animated_button.dart';
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({super.key});

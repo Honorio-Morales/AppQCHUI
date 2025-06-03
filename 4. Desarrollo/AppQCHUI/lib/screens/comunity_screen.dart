@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:AppQCHUI/models/pregunta_model.dart';
-import 'package:AppQCHUI/services/firestore_service.dart';
+import 'package:qchui/models/pregunta_model.dart';
+import 'package:qchui/services/firestore_service.dart';
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
