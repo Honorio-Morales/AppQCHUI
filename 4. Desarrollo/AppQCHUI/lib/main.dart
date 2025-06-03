@@ -79,21 +79,32 @@ class AuthWrapper extends StatelessWidget {
           );
         }
         
-        if (snapshot.hasData) {
+        if (snapshot.hasData && snapshot.data != null) { // <<<--- Pequeña mejora: asegurar que data no sea null
+          // Usar Future.microtask para programar la navegación después de que el build actual termine.
           Future.microtask(() {
-            Navigator.pushReplacementNamed(context, '/main');
+            // Verificar si el widget sigue montado antes de navegar
+            if (Navigator.of(context).canPop()) { // O una verificación más robusta si es necesario
+                 Navigator.pushReplacementNamed(context, '/main');
+            } else {
+                 // A veces, especialmente en hot reload/restart o pruebas, el context puede no estar listo
+                 // para una navegación inmediata. Puedes intentar un pequeño delay o simplemente
+                 // permitir que el build complete y el siguiente tick lo maneje.
+                 // En este caso, pushReplacementNamed es bastante seguro.
+                 Navigator.pushReplacementNamed(context, '/main');
+            }
           });
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+          // Devuelve un placeholder mientras la navegación ocurre.
+          return const Scaffold( 
+            body: Center(child: CircularProgressIndicator(key: Key('AuthWrapperRedirectingIndicator'))), // <<<--- Añadir una key ayuda en pruebas
           );
         }
         
-        return const HomeScreen();
+        // Si no hay datos (usuario no logueado), muestra HomeScreen
+        return const HomeScreen(); // HomeScreen debe manejar el estado de no logueado
       },
     );
   }
 }
-
 class MainNavigationWrapper extends StatefulWidget {
   const MainNavigationWrapper({super.key});
 

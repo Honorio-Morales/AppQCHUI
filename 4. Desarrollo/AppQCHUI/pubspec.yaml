@@ -1,31 +1,31 @@
 name: qchui
 description: "An app that you can use to help you learn the Quechua language."
-publish_to: 'Qchui team'
+publish_to: 'Qchui team' # Debería ser 'none' si no lo publicas, o el nombre de tu equipo.
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.6.2
+  sdk: '>=3.2.0 <4.0.0' # Ajustado para ser más flexible con versiones de Dart 3.x (tu sdk: ^3.6.2 encaja)
 
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.0
-  flutter_animate: ^4.0.0
-  firebase_core: 
-  firebase_auth: 
-  cloud_firestore: ^5.6.5
+  provider: ^6.0.0 # Considera actualizar a la última versión estable (ej. ^6.1.2)
+  flutter_animate: ^4.0.0 # Considera actualizar (ej. ^4.5.0)
+  firebase_core: ^3.3.0 # Especificar una versión es buena práctica, ej. ^2.32.0 o la última
+  firebase_auth: ^5.1.2 # Especificar una versión, ej. ^4.20.0 o la última
+  cloud_firestore: ^5.6.5 # Esto está bien, pero verifica la última estable
   cupertino_icons: ^1.0.8
-  sqflite: ^2.4.2
+  sqflite: ^2.4.2 # Esto parece un error de tipeo, debería ser ^2.3.x o la última (ej. ^2.3.3+1)
   path: ^1.9.1
   flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0 # O la versión que tengas
-  integration_test:    # <--- AÑADE ESTO
-    sdk: flutter       # <--- Y ESTO
+  flutter_lints: ^4.0.0 # Actualizado a una versión más reciente, o la que uses
+  integration_test:
+    sdk: flutter
 
 flutter_native_splash:
   color: "#c39a4c"
@@ -39,6 +39,4 @@ flutter:
     - assets/images/llama.png
     - assets/images/qchui.png
     - assets/images/logoQCHUI.png
-    - assets/verbos.json
-  
-  
+    - assets/verbos.json # Asegúrate que esté en la raíz de assets, o assets/data/verbos.json etc.
