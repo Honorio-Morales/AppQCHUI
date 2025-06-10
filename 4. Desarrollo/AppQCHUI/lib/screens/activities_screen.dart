@@ -286,6 +286,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         screen = const Level1Screen();
         break;
         // aquiponer sus niveles companeros
+      case 2:
+        screen = const Level2Screen(); // Llama a la pantalla del Nivel 2
+        break;
       default:
         screen = const Scaffold(
           body: Center(child: Text('Nivel no disponible aún')),
