@@ -1,28 +1,27 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
-import '../widgets/animated_button.dart'; // Asegúrate de que la ruta a tu botón sea correcta
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qchui/screens/activities_screen.dart'; // Asegúrate que la ruta sea correcta
+import '../widgets/animated_button.dart'; // Asegúrate que la ruta sea correcta
 
 // ==========================================================
-// PARTE 1: MODELOS Y ENUMS
+// PARTE 1: MODELOS Y ENUMS (ACTUALIZADOS)
 // ==========================================================
-class VerbPair {
-  final String quechua;
-  final String espanol;
-  VerbPair(this.quechua, this.espanol);
-}
-
 enum TipoEjercicio { opcionMultiple, relacionar, verdaderoFalso }
 
 class Ejercicio {
+  final String id;
   final TipoEjercicio tipo;
   final String pregunta;
   final List<String> opciones;
   final String respuestaCorrecta;
   final Map<String, String>? pares;
-  
-  bool? fueCorrecto; 
+  bool? fueCorrecto;
 
   Ejercicio({
+    required this.id,
     required this.tipo,
     required this.pregunta,
     required this.opciones,
@@ -30,6 +29,30 @@ class Ejercicio {
     this.pares,
     this.fueCorrecto,
   });
+
+  // Constructor para crear un Ejercicio desde los datos de Firebase
+  factory Ejercicio.fromMap(Map<String, dynamic> map) {
+    TipoEjercicio tipo;
+    switch (map['tipo']) {
+      case 'relacionar':
+        tipo = TipoEjercicio.relacionar;
+        break;
+      case 'verdaderoFalso':
+        tipo = TipoEjercicio.verdaderoFalso;
+        break;
+      default:
+        tipo = TipoEjercicio.opcionMultiple;
+    }
+
+    return Ejercicio(
+      id: map['id'] ?? 'no-id-${Random().nextInt(1000)}',
+      tipo: tipo,
+      pregunta: map['pregunta'] ?? 'Sin pregunta',
+      opciones: List<String>.from(map['opciones'] ?? []),
+      respuestaCorrecta: map['respuestaCorrecta'] ?? '',
+      pares: map['pares'] != null ? Map<String, String>.from(map['pares']) : null,
+    );
+  }
 }
 
 enum ModoJuego { normal, repaso }
@@ -51,27 +74,19 @@ class _Level2ScreenState extends State<Level2Screen> {
   static const Color colorCorrecto = Colors.green;
   static const Color colorIncorrecto = Colors.red;
 
-  // --- Lista de Datos ---
-  final List<VerbPair> _verbos = [
-    VerbPair('Kay', 'Ser, existir'), VerbPair('Pukllay', 'Jugar'), VerbPair('Tusuy', 'Bailar'),
-    VerbPair('Uyariy', 'Escuchar'), VerbPair('Rimay', 'Hablar'), VerbPair('Wayk\'uy', 'Cocinar'),
-    VerbPair('Yuyariy', 'Recordar'), VerbPair('Yuyay', 'Pensar'), VerbPair('Punay', 'Dormir'),
-    VerbPair('Mikhuy', 'Comer'), VerbPair('Takiy', 'Cantar'), VerbPair('Maqlliy', 'Lavar'),
-    VerbPair('Ruway', 'Hacer'), VerbPair('Asiy', 'Reír'), VerbPair('Kaway', 'Mirar'),
-    VerbPair('Puryi', 'Caminar'), VerbPair('Jalay', 'Volar'), VerbPair('Munay', 'Amar'),
-    VerbPair('Willay', 'Decir, avisar'), VerbPair('Paway', 'Correr'),
-  ];
-
-  // --- Estado del Widget ---
-  late List<Ejercicio> _todosLosEjercicios;
-  late List<Ejercicio> _ejerciciosActuales;
-  List<Ejercicio> _ejerciciosFallados = [];
+  // --- NUEVO ESTADO CONECTADO A FIREBASE ---
+  List<Ejercicio> _ejerciciosActuales = [];
+  List<bool> _completedExercises = [];
+  bool _isLoading = true;
+  String? _errorMessage;
+  double _currentProgress = 0.0;
   
+  // --- Estado del Juego ---
+  List<Ejercicio> _ejerciciosFallados = [];
   ModoJuego _modoJuego = ModoJuego.normal;
   int _currentIndex = 0;
   bool _respuestaEnviada = false;
-  bool _respuestaMostrada = false; // NUEVO: Para saber si el usuario pidió la respuesta.
-  
+  bool _respuestaMostrada = false;
   Map<String, String?> _seleccionesUsuarioRelacionar = {};
   String? _quechuaSeleccionado;
   String? _opcionSeleccionada;
@@ -79,68 +94,101 @@ class _Level2ScreenState extends State<Level2Screen> {
   @override
   void initState() {
     super.initState();
-    _iniciarNivel();
+    _loadExercises(); // <-- CAMBIO CLAVE: Se carga desde Firebase al iniciar.
   }
 
   // ==========================================================
-  // PARTE 3: LÓGICA DEL JUEGO
+  // PARTE 3: LÓGICA DE FIREBASE Y PROGRESO
   // ==========================================================
 
-  void _iniciarNivel() {
-    _verbos.shuffle();
-    _todosLosEjercicios = _generarEjercicios(6);
-    _ejerciciosActuales = List.from(_todosLosEjercicios);
-    _ejerciciosFallados = [];
-    _modoJuego = ModoJuego.normal;
-    _currentIndex = 0;
-    _reiniciarEstadoPregunta();
-    setState(() {});
+  Future<void> _loadExercises() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('ejercicios')
+          .doc('nivel_2') // <-- ¡CLAVE! Apunta al documento del Nivel 2.
+          .get();
+
+      if (snapshot.exists) {
+        final data = snapshot.data() as Map<String, dynamic>;
+        setState(() {
+          _ejerciciosActuales = (data['ejercicios'] as List)
+              .map((ejercicioMap) => Ejercicio.fromMap(ejercicioMap))
+              .toList();
+          _completedExercises = List.filled(_ejerciciosActuales.length, false);
+        });
+        await _loadUserProgress();
+      } else {
+        setState(() => _errorMessage = 'No se encontraron ejercicios para el Nivel 2');
+      }
+    } catch (e) {
+      setState(() => _errorMessage = 'Error cargando ejercicios: ${e.toString()}');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _loadUserProgress() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null || !mounted) return;
+
+    try {
+      final doc = await FirebaseFirestore.instance.collection('user_exercises').doc(user.uid).get();
+
+      if (doc.exists && mounted) {
+        final data = doc.data() as Map<String, dynamic>;
+        setState(() {
+          for (int i = 0; i < _ejerciciosActuales.length; i++) {
+            final exerciseId = _ejerciciosActuales[i].id;
+            if (data.containsKey(exerciseId) && data[exerciseId] == true) {
+              _completedExercises[i] = true;
+              _ejerciciosActuales[i].fueCorrecto = true; // Sincroniza el estado visual
+            }
+          }
+          _updateProgress();
+        });
+      }
+    } catch (e) {
+      print('Error cargando progreso del usuario: $e');
+    }
+  }
+
+  void _updateProgress() {
+    if (!mounted) return;
+    final completedCount = _completedExercises.where((e) => e).length;
+    final newProgress = _ejerciciosActuales.isEmpty ? 0.0 : completedCount / _ejerciciosActuales.length;
+    
+    setState(() => _currentProgress = newProgress);
+
+    Provider.of<LevelProgress>(context, listen: false)
+        .updateProgress(1, newProgress); // El índice 1 corresponde al Nivel 2.
+  }
+
+  Future<void> _completeExercise(int exerciseIndex) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null || _completedExercises[exerciseIndex]) return;
+
+    setState(() => _completedExercises[exerciseIndex] = true);
+
+    try {
+      final exerciseId = _ejerciciosActuales[exerciseIndex].id;
+      await FirebaseFirestore.instance
+          .collection('user_exercises')
+          .doc(user.uid)
+          .set({ exerciseId: true }, SetOptions(merge: true));
+      _updateProgress();
+    } catch (e) {
+      setState(() => _completedExercises[exerciseIndex] = false); // Revertir en caso de error
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error guardando progreso: ${e.toString()}')),
+        );
+      }
+    }
   }
   
-  List<Ejercicio> _generarEjercicios(int cantidad) {
-      final List<Ejercicio> generados = [];
-      int verbosIndex = 0;
-      final tipos = [0,1,2,0,1,2]..shuffle();
-
-      for (var tipoId in tipos) {
-          if (verbosIndex >= _verbos.length) break;
-          
-          if(tipoId == 1 && verbosIndex + 4 <= _verbos.length) {
-              generados.add(_crearEjercicioRelacionar(_verbos.sublist(verbosIndex, verbosIndex+4)));
-              verbosIndex += 4;
-          } else if(tipoId != 1) {
-              if (tipoId == 0) generados.add(_crearEjercicioOpcionMultiple(_verbos[verbosIndex]));
-              else generados.add(_crearEjercicioVerdaderoFalso(_verbos[verbosIndex]));
-              verbosIndex++;
-          }
-      }
-      return generados.take(cantidad).toList();
-  }
-
-  Ejercicio _crearEjercicioOpcionMultiple(VerbPair verboCorrecto) {
-    List<String> opciones = _getOpcionesIncorrectas(verboCorrecto.espanol, 3)..add(verboCorrecto.espanol)..shuffle();
-    return Ejercicio(tipo: TipoEjercicio.opcionMultiple, pregunta: '¿Qué significa "${verboCorrecto.quechua}"?', opciones: opciones, respuestaCorrecta: verboCorrecto.espanol);
-  }
-
-  Ejercicio _crearEjercicioRelacionar(List<VerbPair> verbos) {
-    return Ejercicio(tipo: TipoEjercicio.relacionar, pregunta: 'Une el verbo con su significado', opciones: verbos.map((v) => v.espanol).toList()..shuffle(), respuestaCorrecta: '', pares: { for (var v in verbos) v.quechua : v.espanol });
-  }
-
-  Ejercicio _crearEjercicioVerdaderoFalso(VerbPair verboPregunta) {
-    bool esAfirmacionCorrecta = Random().nextBool();
-    String significadoAsignado = esAfirmacionCorrecta ? verboPregunta.espanol : _getOpcionesIncorrectas(verboPregunta.espanol, 1).first;
-    return Ejercicio(tipo: TipoEjercicio.verdaderoFalso, pregunta: 'La palabra "${verboPregunta.quechua}" significa "$significadoAsignado".', opciones: ['Verdadero', 'Falso'], respuestaCorrecta: esAfirmacionCorrecta ? 'Verdadero' : 'Falso');
-  }
-
-  List<String> _getOpcionesIncorrectas(String correcta, int cantidad) {
-      final opciones = <String>{};
-      final copiaVerbos = List<VerbPair>.from(_verbos)..shuffle();
-      for (var verbo in copiaVerbos) {
-          if (verbo.espanol != correcta) opciones.add(verbo.espanol);
-          if (opciones.length == cantidad) break;
-      }
-      return opciones.toList();
-  }
+  // ==========================================================
+  // PARTE 4: LÓGICA DEL JUEGO
+  // ==========================================================
   
   void _revisarRespuesta() {
     setState(() {
@@ -159,7 +207,9 @@ class _Level2ScreenState extends State<Level2Screen> {
 
       ejercicioActual.fueCorrecto = fueCorrecto;
 
-      if (!fueCorrecto && _modoJuego == ModoJuego.normal) {
+      if (fueCorrecto) {
+        _completeExercise(_currentIndex); // <-- ¡INTEGRACIÓN CON FIREBASE!
+      } else if (_modoJuego == ModoJuego.normal && !_ejerciciosFallados.contains(ejercicioActual)) {
         _ejerciciosFallados.add(ejercicioActual);
       }
       
@@ -167,20 +217,15 @@ class _Level2ScreenState extends State<Level2Screen> {
     });
   }
 
-  // NUEVA FUNCIÓN para mostrar la respuesta
   void _mostrarRespuesta() {
     setState(() {
       final ejercicioActual = _ejerciciosActuales[_currentIndex];
-      
-      // La respuesta se marca como incorrecta
       ejercicioActual.fueCorrecto = false;
 
-      // Se añade a los fallos para el modo repaso
       if (_modoJuego == ModoJuego.normal && !_ejerciciosFallados.contains(ejercicioActual)) {
         _ejerciciosFallados.add(ejercicioActual);
       }
       
-      // Para el tipo 'relacionar', llenamos las selecciones con las respuestas correctas
       if (ejercicioActual.tipo == TipoEjercicio.relacionar) {
         _seleccionesUsuarioRelacionar = Map.from(ejercicioActual.pares!);
       }
@@ -203,10 +248,10 @@ class _Level2ScreenState extends State<Level2Screen> {
   
   void _reiniciarEstadoPregunta() {
     _respuestaEnviada = false;
-    _respuestaMostrada = false; // MODIFICADO: Reiniciar el estado
+    _respuestaMostrada = false;
     _opcionSeleccionada = null;
     _quechuaSeleccionado = null;
-    if (_ejerciciosActuales[_currentIndex].tipo == TipoEjercicio.relacionar) {
+    if (_ejerciciosActuales.isNotEmpty && _ejerciciosActuales[_currentIndex].tipo == TipoEjercicio.relacionar) {
         final ejercicio = _ejerciciosActuales[_currentIndex];
         _seleccionesUsuarioRelacionar = { for (var v in ejercicio.pares!.keys) v: null };
     }
@@ -225,7 +270,7 @@ class _Level2ScreenState extends State<Level2Screen> {
 
   void _mostrarDialogoFinal() {
     bool hayFallos = _ejerciciosFallados.isNotEmpty;
-    int puntuacionFinal = _todosLosEjercicios.where((e) => e.fueCorrecto == true).length;
+    int puntuacionFinal = _ejerciciosActuales.where((e) => e.fueCorrecto == true).length;
     
     showDialog(
       context: context,
@@ -237,7 +282,7 @@ class _Level2ScreenState extends State<Level2Screen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Tu puntuación final es: $puntuacionFinal de ${_todosLosEjercicios.length}', style: TextStyle(fontSize: 18)),
+            Text('Tu puntuación final es: $puntuacionFinal de ${_ejerciciosActuales.length}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             if (hayFallos && _modoJuego == ModoJuego.normal) 
               Text('Tienes ${_ejerciciosFallados.length} preguntas por repasar. ¿Quieres intentarlas de nuevo?'),
@@ -254,7 +299,7 @@ class _Level2ScreenState extends State<Level2Screen> {
           TextButton(
             onPressed: () {
               Navigator.of(ctx).pop();
-              Navigator.of(context).pop(); // Vuelve a la pantalla de selección de niveles
+              Navigator.of(context).pop();
             },
             child: Text(_modoJuego == ModoJuego.normal && hayFallos ? 'Salir' : 'Finalizar', style: TextStyle(color: Colors.grey)),
           ),
@@ -264,13 +309,28 @@ class _Level2ScreenState extends State<Level2Screen> {
   }
 
   // ==========================================================
-  // PARTE 4: WIDGETS DE LA INTERFAZ
+  // PARTE 5: WIDGETS DE LA INTERFAZ
   // ==========================================================
   @override
   Widget build(BuildContext context) {
-    // Estado de carga inicial
-    if (_ejerciciosActuales.isEmpty) {
+    if (_isLoading) {
       return Scaffold(backgroundColor: colorFondo, body: Center(child: CircularProgressIndicator(color: colorPrincipal)));
+    }
+
+    if (_errorMessage != null) {
+      return Scaffold(
+        backgroundColor: colorFondo,
+        appBar: AppBar(title: Text('Error', style: TextStyle(color: Colors.white)), backgroundColor: colorPrincipal),
+        body: Center(child: Padding(padding: const EdgeInsets.all(16.0), child: Text(_errorMessage!)))
+      );
+    }
+    
+    if (_ejerciciosActuales.isEmpty) {
+        return Scaffold(
+          backgroundColor: colorFondo,
+          appBar: AppBar(title: Text('Nivel 2', style: TextStyle(color: Colors.white)), backgroundColor: colorPrincipal),
+          body: Center(child: Text('No hay ejercicios disponibles para este nivel.'))
+        );
     }
 
     final ejercicioActual = _ejerciciosActuales[_currentIndex];
@@ -301,7 +361,7 @@ class _Level2ScreenState extends State<Level2Screen> {
                   return FadeTransition(opacity: animation, child: child);
                 },
                 child: KeyedSubtree(
-                  key: ValueKey<int>(_currentIndex), // Para que AnimatedSwitcher sepa que el widget cambió
+                  key: ValueKey<int>(_currentIndex),
                   child: ejercicioActual.tipo == TipoEjercicio.relacionar 
                       ? _buildRelacionarWidget(ejercicioActual) 
                       : _buildOpcionMultipleWidget(ejercicioActual),
@@ -311,7 +371,6 @@ class _Level2ScreenState extends State<Level2Screen> {
             
             SizedBox(height: 10),
 
-            // NUEVO: Botón para mostrar la respuesta
             if (!_respuestaEnviada)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
@@ -325,7 +384,7 @@ class _Level2ScreenState extends State<Level2Screen> {
               text: _respuestaEnviada ? 'Siguiente' : 'Revisar',
               onPressed: _respuestaEnviada 
                   ? _siguientePregunta 
-                  : (_opcionSeleccionada != null || ejercicioActual.tipo == TipoEjercicio.relacionar ? _revisarRespuesta : null),
+                  : ((_opcionSeleccionada != null || ejercicioActual.tipo == TipoEjercicio.relacionar) ? _revisarRespuesta : null),
               enabled: _respuestaEnviada || 
                        (ejercicioActual.tipo == TipoEjercicio.relacionar 
                           ? _seleccionesUsuarioRelacionar.values.every((v) => v != null) 
@@ -344,18 +403,13 @@ class _Level2ScreenState extends State<Level2Screen> {
         SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _todosLosEjercicios.map((ejercicio) {
+          children: _ejerciciosActuales.map((ejercicio) {
             Color color = Colors.grey.shade300;
             IconData? icon;
 
             if (ejercicio.fueCorrecto != null) {
-              if (ejercicio.fueCorrecto!) {
-                color = colorCorrecto;
-                icon = Icons.check;
-              } else {
-                color = colorIncorrecto;
-                icon = Icons.close;
-              }
+              color = ejercicio.fueCorrecto! ? colorCorrecto : colorIncorrecto;
+              icon = ejercicio.fueCorrecto! ? Icons.check : Icons.close;
             }
 
             return Container(
@@ -376,6 +430,7 @@ class _Level2ScreenState extends State<Level2Screen> {
   }
   
   Widget _buildOpcionMultipleWidget(Ejercicio ejercicio) {
+    // ... (Este widget no necesita cambios, se mantiene igual)
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -386,18 +441,14 @@ class _Level2ScreenState extends State<Level2Screen> {
             Color? borderColor;
             Color? tileColor = Colors.white;
 
-            // MODIFICADO: Lógica de colores para incluir el estado _respuestaMostrada
             if (_respuestaEnviada) {
               bool esLaCorrecta = opcion == ejercicio.respuestaCorrecta;
-
               if (esLaCorrecta) {
                 borderColor = colorCorrecto;
-                // Si la respuesta fue mostrada o el usuario la acertó, se pinta de verde
                 if (_respuestaMostrada || isSelected) {
                   tileColor = colorCorrecto.withOpacity(0.2);
                 }
               } else if (isSelected && !_respuestaMostrada) {
-                // Solo se pinta de rojo si el usuario seleccionó una incorrecta (y no pidió la respuesta)
                 borderColor = colorIncorrecto;
                 tileColor = colorIncorrecto.withOpacity(0.2);
               }
@@ -426,6 +477,7 @@ class _Level2ScreenState extends State<Level2Screen> {
   }
   
   Widget _buildRelacionarWidget(Ejercicio ejercicio) {
+    // ... (Este widget no necesita cambios, se mantiene igual)
     void seleccionarQuechua(String quechua) => setState(() => _quechuaSeleccionado = quechua);
     void seleccionarEspanol(String espanol) {
       if (_quechuaSeleccionado != null) {
