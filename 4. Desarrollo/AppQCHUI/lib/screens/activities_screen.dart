@@ -1,221 +1,469 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qchui/views/lvl1.dart';
+import 'package:qchui/views/lvl2.dart';
+import 'package:qchui/views/lvl3.dart';
+import 'package:qchui/views/lvl4.dart';
+import 'package:qchui/views/lvl5.dart';
+
+class LevelProgress extends ChangeNotifier {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  
+  List<LevelStatus> _levels = [];
+  bool _isLoading = true;
+  String? _error;
+
+  List<LevelStatus> get levels => _levels;
+  bool get isLoading => _isLoading;
+  String? get error => _error;
+
+  Future<void> loadUserProgress() async {
+    try {
+      _isLoading = true;
+      _error = null;
+      notifyListeners();
+
+      final user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('Usuario no autenticado');
+      }
+
+      print('Cargando progreso para usuario: ${user.uid}'); // Debug
+
+      // Intentar cargar progreso del usuario
+      final progressDoc = await _firestore.collection('user_progress').doc(user.uid).get();
+      
+      print('Documento de progreso existe: ${progressDoc.exists}'); // Debug
+      
+      // Inicializar niveles basado en el progreso guardado o usar valores por defecto
+      _levels = _initializeLevels(progressDoc.data()?['levels'] as List<dynamic>?);
+
+      // Si no existe el documento de progreso, crear uno nuevo
+      if (!progressDoc.exists) {
+        print('Creando nuevo documento de progreso'); // Debug
+        await _saveProgress();
+      }
+
+      print('Niveles cargados: ${_levels.length}'); // Debug
+      
+    } catch (e) {
+      print('Error en loadUserProgress: $e'); // Debug
+      _error = 'Error cargando progreso: ${e.toString()}';
+      _levels = _initializeDefaultLevels();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  List<LevelStatus> _initializeLevels(List<dynamic>? progressData) {
+    print('Inicializando niveles con data: $progressData'); // Debug
+    
+    return List.generate(5, (index) {
+      final levelData = progressData != null && progressData.length > index 
+          ? progressData[index] as Map<String, dynamic>?
+          : null;
+      
+      final progress = levelData?['progress'] != null 
+          ? (levelData?['progress'] as num).toDouble()
+          : 0.0;
+      
+      final isEnabled = levelData?['isEnabled'] == true || index == 0;
+
+      return LevelStatus(
+        title: "Nivel ${index + 1}",
+        subtitle: _getSubtitle(index, progress, isEnabled),
+        icon: _getIconForLevel(index),
+        progress: progress,
+        isEnabled: isEnabled,
+        color: _getColorForLevel(index, progress, isEnabled),
+      );
+    });
+  }
+
+  List<LevelStatus> _initializeDefaultLevels() {
+    return [
+      LevelStatus(
+        title: "Nivel 1",
+        subtitle: "Por comenzar",
+        icon: Icons.school,
+        progress: 0.0,
+        isEnabled: true,
+        color: Colors.redAccent,
+      ),
+      LevelStatus(
+        title: "Nivel 2",
+        subtitle: "Bloqueado",
+        icon: Icons.star,
+        progress: 0.0,
+        isEnabled: false,
+        color: Colors.grey,
+      ),
+      LevelStatus(
+        title: "Nivel 3",
+        subtitle: "Bloqueado",
+        icon: Icons.emoji_events,
+        progress: 0.0,
+        isEnabled: false,
+        color: Colors.grey,
+      ),
+      LevelStatus(
+        title: "Nivel 4",
+        subtitle: "Bloqueado",
+        icon: Icons.military_tech,
+        progress: 0.0,
+        isEnabled: false,
+        color: Colors.grey,
+      ),
+      LevelStatus(
+        title: "Nivel 5",
+        subtitle: "Bloqueado",
+        icon: Icons.workspace_premium,
+        progress: 0.0,
+        isEnabled: false,
+        color: Colors.grey,
+      ),
+    ];
+  }
+
+  String _getSubtitle(int index, double progress, bool isEnabled) {
+    if (index > 0 && !isEnabled) return "Bloqueado";
+    if (progress == 0.0) return "Por comenzar";
+    if (progress < 0.7) return "En progreso";
+    if (progress < 1.0) return "Casi terminado";
+    return "Completado";
+  }
+
+  IconData _getIconForLevel(int index) {
+    switch(index) {
+      case 0: return Icons.school;
+      case 1: return Icons.star;
+      case 2: return Icons.emoji_events;
+      case 3: return Icons.military_tech;
+      case 4: return Icons.workspace_premium;
+      default: return Icons.help_outline;
+    }
+  }
+
+  Color _getColorForLevel(int index, double progress, bool isEnabled) {
+    if (!isEnabled) return Colors.grey;
+    if (progress >= 0.7) return Colors.green;
+    return Colors.redAccent;
+  }
+
+  Future<void> updateProgress(int levelIndex, double newProgress) async {
+    if (levelIndex < 0 || levelIndex >= _levels.length) return;
+
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    print('Actualizando progreso - Nivel: $levelIndex, Progreso: $newProgress'); // Debug
+
+    _levels[levelIndex].progress = newProgress.clamp(0.0, 1.0);
+    _levels[levelIndex].subtitle = _getSubtitle(
+      levelIndex, 
+      newProgress, 
+      _levels[levelIndex].isEnabled
+    );
+    _levels[levelIndex].color = _getColorForLevel(
+      levelIndex, 
+      newProgress, 
+      _levels[levelIndex].isEnabled
+    );
+    
+    // Desbloquear siguiente nivel si se completa al menos 70%
+    if (newProgress >= 0.7 && levelIndex + 1 < _levels.length) {
+      _levels[levelIndex + 1].isEnabled = true;
+      _levels[levelIndex + 1].subtitle = _getSubtitle(
+        levelIndex + 1, 
+        0.0, 
+        true
+      );
+      _levels[levelIndex + 1].color = _getColorForLevel(
+        levelIndex + 1, 
+        0.0, 
+        true
+      );
+    }
+
+    try {
+      await _saveProgress();
+      notifyListeners();
+    } catch (e) {
+      print('Error actualizando progreso: $e'); // Debug
+      _error = 'Error actualizando progreso';
+      notifyListeners();
+    }
+  }
+
+  Future<void> _saveProgress() async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('Usuario no autenticado');
+      }
+
+      print('Guardando progreso para usuario: ${user.uid}'); // Debug
+
+      final progressData = {
+        'levels': _levels.map((level) => {
+          'title': level.title,
+          'subtitle': level.subtitle,
+          'progress': level.progress,
+          'isEnabled': level.isEnabled,
+        }).toList(),
+        'lastUpdated': FieldValue.serverTimestamp(),
+        'userId': user.uid,
+      };
+
+      print('Datos a guardar: $progressData'); // Debug
+
+      await _firestore.collection('user_progress').doc(user.uid).set(
+        progressData,
+        SetOptions(merge: true)
+      );
+
+      print('Progreso guardado exitosamente'); // Debug
+      
+    } catch (e) {
+      print('Error saving progress: $e');
+      throw Exception('Error guardando progreso: ${e.toString()}');
+    }
+  }
+
+  // Método para reintentar cargar el progreso
+  Future<void> retry() async {
+    await loadUserProgress();
+  }
+}
+
+class LevelStatus {
+  final String title;
+  String subtitle;
+  final IconData icon;
+  double progress;
+  bool isEnabled;
+  Color color;
+
+  LevelStatus({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.progress,
+    required this.isEnabled,
+    required this.color,
+  });
+}
 
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({super.key});
 
   @override
-  _ExerciseScreenState createState() => _ExerciseScreenState();
+  State<ExerciseScreen> createState() => _ExerciseScreenState();
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
-  int? selectedLevel;
-  int currentExerciseIndex = 0;
-  Map<int, int> correctAnswers = {}; // nivel -> aciertos
-  Map<int, int> totalAnswers = {}; // nivel -> intentos
-
-  final String userId = FirebaseAuth.instance.currentUser?.uid ?? 'anon';
-
-  final Map<int, List<Map<String, dynamic>>> levelExercises = {
-    1: [
-      {
-        'title': 'Selecciona el color que corresponde a "puka"',
-        'options': ['Rojo', 'Azul', 'Verde'],
-        'answer': 'Rojo',
-      },
-      {
-        'title': '¿Qué come el perro?',
-        'options': ['Hueso', 'Zapato', 'Piedra'],
-        'answer': 'Hueso',
-      },
-      {
-        'title': 'Une: Puka = ?',
-        'options': ['Rojo', 'Amarillo', 'Blanco'],
-        'answer': 'Rojo',
-      },
-      {
-        'title': '¿Qué color es "q’omer"?',
-        'options': ['Verde', 'Negro', 'Rojo'],
-        'answer': 'Verde',
-      },
-    ],
-  };
-
-  String? selectedOption;
-  bool exerciseCompleted = false;
-  bool showResults = false;
-
-  void submitAnswer(String selected, String correct) {
-    if (!exerciseCompleted) {
-      setState(() {
-        totalAnswers[selectedLevel!] = (totalAnswers[selectedLevel!] ?? 0) + 1;
-        if (selected == correct) {
-          correctAnswers[selectedLevel!] = (correctAnswers[selectedLevel!] ?? 0) + 1;
-        }
-        exerciseCompleted = true;
-      });
-    }
-  }
-
-  void nextExercise() {
-    setState(() {
-      if (currentExerciseIndex < levelExercises[selectedLevel!]!.length - 1) {
-        currentExerciseIndex++;
-        exerciseCompleted = false;
-        selectedOption = null;
-      } else {
-        showResults = true;
+  @override
+  void initState() {
+    super.initState();
+    // Cargar progreso cuando se inicializa la pantalla
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final levelProgress = Provider.of<LevelProgress>(context, listen: false);
+      if (levelProgress.levels.isEmpty) {
+        levelProgress.loadUserProgress();
       }
     });
   }
 
-  void resetLevel() {
-    setState(() {
-      currentExerciseIndex = 0;
-      exerciseCompleted = false;
-      selectedOption = null;
-      showResults = false;
-      correctAnswers[selectedLevel!] = 0;
-      totalAnswers[selectedLevel!] = 0;
-    });
+  void _goToLevel(BuildContext context, int level) {
+    Widget screen;
+    switch (level) {
+      case 1:
+        screen = const Level1Screen();
+        break;
+        // aquiponer sus niveles companeros
+      default:
+        screen = const Scaffold(
+          body: Center(child: Text('Nivel no disponible aún')),
+        );
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => screen),
+    );
   }
 
-  Widget buildLevelButtons() {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      alignment: WrapAlignment.center,
-      children: List.generate(5, (index) {
-        int level = index + 1;
-        bool isSelected = selectedLevel == level;
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          transform: isSelected ? Matrix4.translationValues(0, -10, 0) : Matrix4.identity(),
-          child: ElevatedButton(
-            onPressed: () {
-              setState(() {
-                selectedLevel = level;
-                resetLevel();
-              });
+  Widget _buildLevelCard(BuildContext context, int index, LevelStatus level) {
+    return GestureDetector(
+      onTap: level.isEnabled 
+          ? () => _goToLevel(context, index + 1) 
+          : () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Completa el nivel anterior para desbloquear'),
+                  backgroundColor: Colors.orange,
+                  duration: Duration(seconds: 2),
+                ),
+              );
             },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              backgroundColor: isSelected ? Colors.orange : const Color.fromARGB(255, 255, 255, 255),
-              textStyle: const TextStyle(fontSize: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      child: Card(
+        elevation: level.isEnabled ? 4 : 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        color: level.isEnabled ? Colors.white : Colors.grey[100],
+        margin: const EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(level.icon, size: 36, color: level.color.withOpacity(0.2)),
+                  Icon(level.icon, size: 30, color: level.color),
+                  if (!level.isEnabled)
+                    Icon(Icons.lock, size: 16, color: Colors.grey[600]),
+                ],
               ),
-              elevation: isSelected ? 10 : 2,
-            ),
-            child: Text('Nivel $level'),
-          ).animate().fadeIn(duration: 500.ms).scale(),
-        );
-      }),
+              const SizedBox(height: 12),
+              Text(
+                level.title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold, 
+                  color: level.color,
+                ),
+              ),
+              const SizedBox(height: 8),
+              LinearProgressIndicator(
+                value: level.progress,
+                minHeight: 8,
+                color: level.color,
+                backgroundColor: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                level.subtitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: level.isEnabled ? Colors.black87 : Colors.grey,
+                ),
+              ),
+              if (level.progress > 0)
+                Text(
+                  '${(level.progress * 100).toStringAsFixed(0)}%',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: level.color,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    ).animate().fadeIn(duration: 300.ms).slideY(
+      begin: 0.1,
+      curve: Curves.easeOutQuad,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final exercises = selectedLevel != null ? levelExercises[selectedLevel] : null;
+    return Consumer<LevelProgress>(
+      builder: (context, levelProgress, child) {
+        return Scaffold(
+          body: _buildBody(context, levelProgress),
+        );
+      },
+    );
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ejercicios de Quechua'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+  Widget _buildBody(BuildContext context, LevelProgress levelProgress) {
+    if (levelProgress.isLoading) {
+      return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Selecciona un nivel para comenzar:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFEE7072)),
             ),
-            const SizedBox(height: 12),
-            Center(child: buildLevelButtons()),
-            const SizedBox(height: 24),
-            if (selectedLevel != null && showResults) ...[
-              Text(
-                'Resultados del Nivel $selectedLevel',
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              Text('Correctas: ${correctAnswers[selectedLevel] ?? 0}'),
-              Text('Total: ${totalAnswers[selectedLevel] ?? 0}'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    selectedLevel = null;
-                    showResults = false;
-                  });
-                },
-                child: const Text('Volver a niveles'),
-              ),
-            ] else if (selectedLevel != null && exercises != null) ...[
-              Text(
-                'Ejercicio ${currentExerciseIndex + 1} de ${exercises.length}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                exercises[currentExerciseIndex]['title'],
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 12),
-              ...exercises[currentExerciseIndex]['options']
-                  .map<Widget>(
-                    (option) => RadioListTile<String>(
-                      title: Text(option),
-                      value: option,
-                      groupValue: selectedOption,
-                      onChanged: exerciseCompleted
-                          ? null
-                          : (value) {
-                              setState(() {
-                                selectedOption = value;
-                              });
-                            },
-                    ),
-                  )
-                  .toList(),
-              const SizedBox(height: 12),
-              if (!exerciseCompleted)
-                ElevatedButton(
-                  onPressed: selectedOption != null
-                      ? () => submitAnswer(
-                            selectedOption!,
-                            exercises[currentExerciseIndex]['answer'],
-                          )
-                      : null,
-                  child: const Text('Comprobar'),
-                ),
-              if (exerciseCompleted)
-                Column(
-                  children: [
-                    Text(
-                      selectedOption == exercises[currentExerciseIndex]['answer']
-                          ? '¡Correcto!'
-                          : 'Incorrecto. La respuesta era: ${exercises[currentExerciseIndex]['answer']}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: selectedOption == exercises[currentExerciseIndex]['answer']
-                            ? Colors.green
-                            : Colors.red,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: nextExercise,
-                      child: const Text('Siguiente'),
-                    ),
-                  ],
-                ),
-            ],
+            SizedBox(height: 16),
+            Text('Cargando niveles...'),
           ],
         ),
+      );
+    }
+
+    if (levelProgress.error != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, size: 64, color: Colors.red),
+              SizedBox(height: 16),
+              Text(
+                levelProgress.error!,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => levelProgress.retry(),
+                child: Text('Reintentar'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFEE7072),
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.school, color: Color(0xFFEE7072)),
+              SizedBox(width: 8),
+              Text(
+                'Selecciona un nivel:',
+                style: TextStyle(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFEE7072),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 0.9,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              children: List.generate(levelProgress.levels.length, (index) {
+                return _buildLevelCard(context, index, levelProgress.levels[index]);
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }

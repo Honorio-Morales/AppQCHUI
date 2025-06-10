@@ -78,18 +78,18 @@ class FavoritesScreen extends StatelessWidget {
   }
 
   Widget _buildEmptyState() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.favorite_border, size: 50, color: Colors.grey),
-          const SizedBox(height: 20),
-          const Text(
+          Icon(Icons.favorite_border, size: 50, color: Colors.grey),
+          SizedBox(height: 20),
+          Text(
             'No tienes favoritos aún',
             style: TextStyle(fontSize: 18),
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: 10),
+          Text(
             'Toca el corazón en las palabras para guardarlas aquí',
             style: TextStyle(color: Colors.grey),
             textAlign: TextAlign.center,

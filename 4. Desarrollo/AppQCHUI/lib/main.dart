@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:qchui/services/auth_service.dart';
 import 'package:qchui/services/firestore_service.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -31,6 +32,9 @@ class TraduchuaApp extends StatelessWidget {
       providers: [
         Provider<AuthService>(create: (_) => AuthService()),
         Provider<FirestoreService>(create: (_) => FirestoreService()),
+         ChangeNotifierProvider<LevelProgress>(
+          create: (_) => LevelProgress(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

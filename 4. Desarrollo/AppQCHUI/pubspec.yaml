@@ -10,13 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.0 # Considera actualizar a la última versión estable (ej. ^6.1.2)
-  flutter_animate: ^4.0.0 # Considera actualizar (ej. ^4.5.0)
+  provider: ^6.1.5 
+  flutter_animate: ^4.5.0 # Considera actualizar 
   firebase_core: ^3.3.0 # Especificar una versión es buena práctica, ej. ^2.32.0 o la última
   firebase_auth: ^5.1.2 # Especificar una versión, ej. ^4.20.0 o la última
   cloud_firestore: ^5.6.5 # Esto está bien, pero verifica la última estable
   cupertino_icons: ^1.0.8
-  sqflite: ^2.4.2 # Esto parece un error de tipeo, debería ser ^2.3.x o la última (ej. ^2.3.3+1)
+  sqflite: ^2.4.2 # Esto parece un error de tipeo, debería ser
   path: ^1.9.1
   flutter_native_splash: ^2.4.5
 
