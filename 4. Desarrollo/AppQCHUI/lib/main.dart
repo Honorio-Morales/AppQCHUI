@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:qchui/services/auth_service.dart';
 import 'package:qchui/services/firestore_service.dart';
+import 'package:qchui/views/lvl4.dart';
 
 
 void main() async {
@@ -32,7 +33,7 @@ class TraduchuaApp extends StatelessWidget {
       providers: [
         Provider<AuthService>(create: (_) => AuthService()),
         Provider<FirestoreService>(create: (_) => FirestoreService()),
-         ChangeNotifierProvider<LevelProgress>(
+        ChangeNotifierProvider<LevelProgress>(
           create: (_) => LevelProgress(),
         ),
       ],
@@ -63,6 +64,7 @@ class TraduchuaApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
           '/main': (context) => const MainNavigationWrapper(),
+          '/nivel4': (context) => const Nivel4Page(),
         },
       ),
     );
@@ -82,27 +84,27 @@ class AuthWrapper extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         }
-        
+
         if (snapshot.hasData && snapshot.data != null) { // <<<--- Pequeña mejora: asegurar que data no sea null
           // Usar Future.microtask para programar la navegación después de que el build actual termine.
           Future.microtask(() {
             // Verificar si el widget sigue montado antes de navegar
             if (Navigator.of(context).canPop()) { // O una verificación más robusta si es necesario
-                 Navigator.pushReplacementNamed(context, '/main');
+              Navigator.pushReplacementNamed(context, '/main');
             } else {
-                 // A veces, especialmente en hot reload/restart o pruebas, el context puede no estar listo
-                 // para una navegación inmediata. Puedes intentar un pequeño delay o simplemente
-                 // permitir que el build complete y el siguiente tick lo maneje.
-                 // En este caso, pushReplacementNamed es bastante seguro.
-                 Navigator.pushReplacementNamed(context, '/main');
+              // A veces, especialmente en hot reload/restart o pruebas, el context puede no estar listo
+              // para una navegación inmediata. Puedes intentar un pequeño delay o simplemente
+              // permitir que el build complete y el siguiente tick lo maneje.
+              // En este caso, pushReplacementNamed es bastante seguro.
+              Navigator.pushReplacementNamed(context, '/main');
             }
           });
           // Devuelve un placeholder mientras la navegación ocurre.
-          return const Scaffold( 
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator(key: Key('AuthWrapperRedirectingIndicator'))), // <<<--- Añadir una key ayuda en pruebas
           );
         }
-        
+
         // Si no hay datos (usuario no logueado), muestra HomeScreen
         return const HomeScreen(); // HomeScreen debe manejar el estado de no logueado
       },
@@ -131,11 +133,11 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
         setState(() => _currentUser = user);
       }
     });
-    
+
     _screens = [
       const HomeScreen(),
       const DictionaryScreen(),
-      const ExerciseScreen(), 
+      const ExerciseScreen(),
       const CommunityScreen(),
       const FavoritesScreen(),
       const InfoScreen(),
@@ -147,7 +149,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
     if (mounted) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/',
-        (route) => false,
+            (route) => false,
       );
     }
   }
@@ -162,9 +164,9 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
       backgroundColor: const Color(0xFFEE7072),
       child: _currentUser?.email != null
           ? Text(
-              _currentUser!.email![0].toUpperCase(),
-              style: const TextStyle(color: Colors.white),
-            )
+        _currentUser!.email![0].toUpperCase(),
+        style: const TextStyle(color: Colors.white),
+      )
           : const Icon(Icons.person, color: Colors.white),
     );
   }
@@ -172,59 +174,59 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _selectedIndex != 0 
+      appBar: _selectedIndex != 0
           ? AppBar(
-              title: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/qchui.png',
-                    height: 60,
-                    width: 60,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    _selectedIndex == 1 ? 'Diccionario' : 
-                    _selectedIndex == 2 ? 'Ejercicios' :
-                    _selectedIndex == 3 ? 'Comunidad' :
-                    _selectedIndex == 4 ? 'Favoritos' : 'Información',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/qchui.png',
+              height: 60,
+              width: 60,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              _selectedIndex == 1 ? 'Diccionario' :
+              _selectedIndex == 2 ? 'Ejercicios' :
+              _selectedIndex == 3 ? 'Comunidad' :
+              _selectedIndex == 4 ? 'Favoritos' : 'Información',
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-              actions: [
-                IconButton(
-                  icon: _buildUserAvatar(),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Cerrar Sesión'),
-                        content: const Text('¿Estás seguro que deseas salir?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancelar'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              _signOut();
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              'Salir',
-                              style: TextStyle(color: Color(0xFFEE7072)),
-                            ),
-                          ),
-                        ],
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: _buildUserAvatar(),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Cerrar Sesión'),
+                  content: const Text('¿Estás seguro que deseas salir?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancelar'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _signOut();
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Salir',
+                        style: TextStyle(color: Color(0xFFEE7072)),
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ],
-            )
+              );
+            },
+          ),
+        ],
+      )
           : null,
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
