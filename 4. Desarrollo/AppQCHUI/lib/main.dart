@@ -64,7 +64,7 @@ class TraduchuaApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
           '/main': (context) => const MainNavigationWrapper(),
-          '/nivel4': (context) => const Nivel4Page(),
+          '/nivel4': (context) => const Level4Screen(),
         },
       ),
     );

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qchui/screens/activities_screen.dart';
 
-class Nivel4Page extends StatefulWidget {
-  const Nivel4Page({super.key});
+class Level4Screen extends StatefulWidget {
+  const Level4Screen({super.key});
 
   @override
-  State<Nivel4Page> createState() => _Nivel4PageState();
+  State<Level4Screen> createState() => _Nivel4PageState();
 }
 
-class _Nivel4PageState extends State<Nivel4Page> {
+class _Nivel4PageState extends State<Level4Screen> {
   int preguntaActual = 0;
   bool mostrarResultado = false;
   bool respuestaCorrecta = false;
